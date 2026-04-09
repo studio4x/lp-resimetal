@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://resimetalbeneficiamentos.com.br/sitemap.xml
