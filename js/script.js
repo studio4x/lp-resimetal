@@ -205,6 +205,32 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators();
         });
 
+        // Suporte Mobile Touch (Swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        track.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 40) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                currentIndex++;
+                updatePosition();
+                updateIndicators();
+            }
+            if (touchEndX > touchStartX + 40) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                currentIndex--;
+                updatePosition();
+                updateIndicators();
+            }
+        }, {passive: true});
+
         window.addEventListener('resize', () => {
             updatePosition(false);
         });

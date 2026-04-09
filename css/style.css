@@ -348,6 +348,8 @@ img {
 .c-feature { display: flex; gap: 16px; margin-bottom: 24px; }
 .c-feature i { font-size: 2.5rem; color: var(--accent-gold); }
 
+.correios-features { margin-top: 40px; }
+
 .rounded-premium { border-radius: var(--border-radius); overflow: hidden; }
 .img-fluid { width: 100%; height: auto; object-fit: cover; }
 
@@ -491,8 +493,9 @@ img {
 .contact-info { margin-top: 30px; }
 .contact-info li { display: flex; gap: 15px; margin-bottom: 25px; }
 .contact-info i { font-size: 1.5rem; }
+.contact-info div { min-width: 0; flex: 1; }
 .contact-info div span { display: block; font-size: 0.85rem; color: var(--text-secondary); }
-.contact-info div strong { font-size: 1.1rem; }
+.contact-info div strong { font-size: 1.1rem; display: block; overflow-wrap: break-word; word-break: break-all; }
 
 .quote-form { background: var(--bg-white); padding: 40px; border-radius: var(--border-radius); box-shadow: var(--shadow-lg); }
 .form-group { margin-bottom: 20px; }
