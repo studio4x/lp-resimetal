@@ -119,4 +119,99 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+    /* --- CARROSSEL INFINITO (3 COLUNAS) --- */
+    const track = document.querySelector('.carousel-track');
+    const originalSlides = Array.from(document.querySelectorAll('.carousel-slide') || []);
+    const nextButton = document.querySelector('.carousel-button.next');
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const indicatorsContainer = document.querySelector('.carousel-indicators');
+    
+    if (track && originalSlides.length > 0) {
+        // Detectar quantos slides por vez baseado na largura (responsive)
+        const getSlidesPerView = () => {
+            if (window.innerWidth <= 576) return 1;
+            if (window.innerWidth <= 992) return 2;
+            return 3;
+        };
+
+        let slidesPerView = getSlidesPerView();
+        
+        // Clonar itens para o loop infinito
+        originalSlides.forEach(s => {
+            const clone = s.cloneNode(true);
+            track.appendChild(clone);
+        });
+        
+        [...originalSlides].reverse().forEach(s => {
+            const clone = s.cloneNode(true);
+            track.insertBefore(clone, track.firstChild);
+        });
+
+        const slideCount = originalSlides.length;
+        let currentIndex = slideCount; 
+        
+        const updatePosition = (withTransition = true) => {
+            slidesPerView = getSlidesPerView();
+            const slideWidth = 100 / slidesPerView;
+            track.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
+            track.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+        };
+
+        // Setup indicators
+        originalSlides.forEach((_, index) => {
+            const indicator = document.createElement('button');
+            indicator.classList.add('indicator');
+            if (index === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => {
+                currentIndex = index + slideCount;
+                updatePosition();
+                updateIndicators();
+            });
+            indicatorsContainer.appendChild(indicator);
+        });
+
+        const indicators = Array.from(document.querySelectorAll('.indicator'));
+        
+        const updateIndicators = () => {
+            let visualIndex = (currentIndex - slideCount) % slideCount;
+            if (visualIndex < 0) visualIndex += slideCount;
+            indicators.forEach(ind => ind.classList.remove('active'));
+            if (indicators[visualIndex]) indicators[visualIndex].classList.add('active');
+        };
+
+        track.addEventListener('transitionend', () => {
+            if (currentIndex >= slideCount * 2) {
+                currentIndex = slideCount;
+                updatePosition(false);
+            } else if (currentIndex < slideCount) {
+                currentIndex = slideCount + (slideCount - 1);
+                updatePosition(false);
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex++;
+            updatePosition();
+            updateIndicators();
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentIndex--;
+            updatePosition();
+            updateIndicators();
+        });
+
+        window.addEventListener('resize', () => {
+            updatePosition(false);
+        });
+        
+        updatePosition(false);
+
+        setInterval(() => {
+            currentIndex++;
+            updatePosition();
+            updateIndicators();
+        }, 5000);
+    }
 });
+
