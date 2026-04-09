@@ -195,18 +195,18 @@ img {
 
 /* LOGO SIZE ADJUSTMENTS */
 .logo-img {
-  height: 48px; /* Aumentado em 20% (de 40px para 48px) */
+  height: 67px; /* Aumentado em 40% em relacao aos 48px */
   width: auto;
   transition: var(--transition);
 }
 
 .header.scrolled .logo-img {
-  height: 40px; /* Redução suave ao rolar */
+  height: 50px; /* Redução suave ao rolar */
 }
 
 @media (max-width: 768px) {
   .logo-img {
-    height: 42px;
+    height: 55px;
   }
 }
 
@@ -332,6 +332,7 @@ img {
 ========================================= */
 .section-header { text-align: center; margin-bottom: 60px; }
 .section-title { font-size: 2.5rem; margin-bottom: 16px; color: var(--bg-main); }
+.bg-dark .section-title, .bg-dark p { color: #FFFFFF; } /* Adicionado para contraste braco na aba escura */
 .section-subtitle { color: var(--text-secondary); font-size: 1.1rem; }
 
 .correios-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
@@ -464,6 +465,16 @@ img {
 /* =========================================
    CONTACT
 ========================================= */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+.col-text, .col-form {
+  flex: 1;
+  min-width: 320px;
+}
+
 .contact-info { margin-top: 30px; }
 .contact-info li { display: flex; gap: 15px; margin-bottom: 25px; }
 .contact-info i { font-size: 1.5rem; }
