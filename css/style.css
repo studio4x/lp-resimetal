@@ -157,8 +157,6 @@ img {
   padding: 10px 0;
   font-size: 0.9rem;
   font-weight: 600;
-  position: fixed;
-  top: 0; left: 0;
   width: 100%;
   z-index: 1001;
 }
@@ -173,7 +171,6 @@ img {
 
 @media (max-width: 992px) {
   .top-bar { display: block; }
-  .header { top: 40px; }
 }
 
 /* =========================================
@@ -188,29 +185,28 @@ img {
   z-index: 1000;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-  height: 80px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
-.header.scrolled { height: 70px; }
-.header-container { display: flex; justify-content: space-between; align-items: center; }
+.header-container { width: 100%; height: 80px; display: flex; justify-content: space-between; align-items: center; }
+.header.scrolled .header-container { height: 70px; }
 
 /* LOGO SIZE ADJUSTMENTS */
 .logo-img {
-  height: 67px; /* Aumentado em 40% em relacao aos 48px */
+  height: 48px;
   width: auto;
   transition: var(--transition);
 }
 
 .header.scrolled .logo-img {
-  height: 50px; /* Redução suave ao rolar */
+  height: 40px;
 }
 
 @media (max-width: 768px) {
   .logo-img {
-    height: auto;
-    max-width: 65vw; /* Impede que o longo empurre o botão do menu para fora */
+    height: 40px;
+    max-width: 65vw;
   }
 }
 
