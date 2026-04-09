@@ -230,9 +230,9 @@ img {
 
 @media (max-width: 992px) {
   .nav-menu {
-    position: fixed;
-    top: 80px; left: -100%;
-    width: 100%; height: calc(100vh - 80px);
+    position: absolute;
+    top: 100%; left: -100vw;
+    width: 100vw; height: 100vh;
     background: var(--bg-white);
     transition: var(--transition);
     padding: 40px 24px;
