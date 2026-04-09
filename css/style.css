@@ -271,13 +271,17 @@ img {
   align-items: center;
   gap: 6px;
   background-color: rgba(21, 142, 18, 0.15);
-  color: #FFFFFF; /* Mudado de verde (gold) para branco, conforme solicitado */
+  color: var(--accent-gold); /* Verde escuro padrão */
   padding: 6px 14px;
   border-radius: 50px;
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 24px;
-  border: 1px solid rgba(21, 142, 18, 0.5); /* Borda um pouco mais visível */
+  border: 1px solid rgba(21, 142, 18, 0.5);
+}
+
+.bg-dark .badge, .hero .badge {
+  color: #FFFFFF; /* Apenas branco onde o fundo é muito escuro */
 }
 
 .hero h1 { font-size: 3.5rem; margin-bottom: 24px; letter-spacing: -1px; }
