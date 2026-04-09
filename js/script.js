@@ -127,16 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const indicatorsContainer = document.querySelector('.carousel-indicators');
     
     if (track && originalSlides.length > 0) {
-        // Detectar quantos slides por vez baseado na largura (responsive)
-        const getSlidesPerView = () => {
-            if (window.innerWidth <= 576) return 1;
-            if (window.innerWidth <= 992) return 2;
-            return 3;
-        };
-
-        let slidesPerView = getSlidesPerView();
+        // Quantidade de slides dependendo do responsivo (apenas para fallback visual, o CSS que controla o tamanho)
+        const slideCount = originalSlides.length;
         
-        // Clonar itens para o loop infinito
+        // Vamos clonar todos os originais para colocar antes e depois
         originalSlides.forEach(s => {
             const clone = s.cloneNode(true);
             track.appendChild(clone);
@@ -147,14 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
             track.insertBefore(clone, track.firstChild);
         });
 
-        const slideCount = originalSlides.length;
+        // currentIndex começa nos originais (apos os clones de início)
         let currentIndex = slideCount; 
+        let isTransitioning = false;
         
         const updatePosition = (withTransition = true) => {
-            slidesPerView = getSlidesPerView();
-            const slideWidth = 100 / slidesPerView;
+            if (!originalSlides[0]) return;
+            const slideWidth = track.firstElementChild.getBoundingClientRect().width;
             track.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
-            track.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
         };
 
         // Setup indicators
@@ -163,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             indicator.classList.add('indicator');
             if (index === 0) indicator.classList.add('active');
             indicator.addEventListener('click', () => {
+                if (isTransitioning) return;
                 currentIndex = index + slideCount;
                 updatePosition();
                 updateIndicators();
@@ -180,22 +176,30 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         track.addEventListener('transitionend', () => {
+            isTransitioning = false;
+            // Se foi pros clones do final
             if (currentIndex >= slideCount * 2) {
-                currentIndex = slideCount;
+                currentIndex -= slideCount;
                 updatePosition(false);
-            } else if (currentIndex < slideCount) {
-                currentIndex = slideCount + (slideCount - 1);
+            } 
+            // Se foi pros clones do inicio
+            else if (currentIndex < slideCount) {
+                currentIndex += slideCount;
                 updatePosition(false);
             }
         });
 
         nextButton.addEventListener('click', () => {
+            if (isTransitioning) return;
+            isTransitioning = true;
             currentIndex++;
             updatePosition();
             updateIndicators();
         });
 
         prevButton.addEventListener('click', () => {
+            if (isTransitioning) return;
+            isTransitioning = true;
             currentIndex--;
             updatePosition();
             updateIndicators();
@@ -205,12 +209,17 @@ document.addEventListener('DOMContentLoaded', () => {
             updatePosition(false);
         });
         
+        // Posição Inicial
         updatePosition(false);
 
+        // Auto-play
         setInterval(() => {
-            currentIndex++;
-            updatePosition();
-            updateIndicators();
+            if (!isTransitioning) {
+                isTransitioning = true;
+                currentIndex++;
+                updatePosition();
+                updateIndicators();
+            }
         }, 5000);
     }
 });
