@@ -195,18 +195,18 @@ img {
 
 /* LOGO SIZE ADJUSTMENTS */
 .logo-img {
-  height: 50px; /* Reduzido de 80px para 50px */
+  height: 40px; /* Reduzido para garantir que caiba no menu */
   width: auto;
   transition: var(--transition);
 }
 
 .header.scrolled .logo-img {
-  height: 40px; /* Reduz ainda mais ao rolar */
+  height: 35px; /* Tamanho reduzido ao rolar */
 }
 
 @media (max-width: 768px) {
   .logo-img {
-    height: 45px;
+    height: 35px;
   }
 }
 
