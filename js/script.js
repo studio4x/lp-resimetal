@@ -145,11 +145,31 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = slideCount; 
         let isTransitioning = false;
         
+        const finalizeTransition = () => {
+            isTransitioning = false;
+            if (currentIndex >= slideCount * 2) {
+                currentIndex -= slideCount;
+                updatePosition(false);
+            } else if (currentIndex < slideCount) {
+                currentIndex += slideCount;
+                updatePosition(false);
+            }
+        };
+
+        track.addEventListener('transitionend', finalizeTransition);
+
         const updatePosition = (withTransition = true) => {
             if (!originalSlides[0]) return;
             const slideWidth = track.firstElementChild.getBoundingClientRect().width;
             track.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
             track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            
+            if (withTransition) {
+                clearTimeout(track.transitionTimeout);
+                track.transitionTimeout = setTimeout(finalizeTransition, 550);
+            } else {
+                isTransitioning = false;
+            }
         };
 
         // Setup indicators
@@ -175,19 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (indicators[visualIndex]) indicators[visualIndex].classList.add('active');
         };
 
-        track.addEventListener('transitionend', () => {
-            isTransitioning = false;
-            // Se foi pros clones do final
-            if (currentIndex >= slideCount * 2) {
-                currentIndex -= slideCount;
-                updatePosition(false);
-            } 
-            // Se foi pros clones do inicio
-            else if (currentIndex < slideCount) {
-                currentIndex += slideCount;
-                updatePosition(false);
-            }
-        });
+        // transitionend ja lidado no finalizeTransition
 
         nextButton.addEventListener('click', () => {
             if (isTransitioning) return;
