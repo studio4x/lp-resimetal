@@ -209,7 +209,8 @@ img {
 
 @media (max-width: 768px) {
   .logo-img {
-    height: 55px;
+    height: auto;
+    max-width: 65vw; /* Impede que o longo empurre o botão do menu para fora */
   }
 }
 
