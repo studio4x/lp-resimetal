@@ -383,7 +383,7 @@ img {
 .footer-brand p { color: var(--text-light); margin-top: 20px; max-width: 350px; }
 
 .footer-logo-img {
-  height: 45px; /* Reduzido de 60px para 45px */
+  height: 90px; /* Aumentado em 100% (de 45px para 90px) */
   width: auto;
   filter: brightness(0) invert(1); /* Aplica branco no rodapé */
   margin-bottom: 20px;
