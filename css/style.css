@@ -344,6 +344,8 @@ img {
 
 .c-feature { display: flex; gap: 16px; margin-bottom: 24px; }
 .c-feature i { font-size: 2.5rem; color: var(--accent-gold); }
+.c-feature h5 { font-size: 1.3rem; margin-bottom: 8px; font-weight: 700; color: var(--text-white); }
+.c-feature span { font-size: 1.05rem; line-height: 1.6; }
 
 .correios-features { margin-top: 40px; }
 
