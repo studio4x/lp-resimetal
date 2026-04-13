@@ -340,7 +340,10 @@ img {
 .section-subtitle { color: var(--text-secondary); font-size: 1.1rem; }
 
 .correios-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-@media (max-width: 992px) { .correios-container { grid-template-columns: 1fr; } }
+@media (max-width: 992px) { 
+  .correios-container { grid-template-columns: 1fr; }
+  #sustentabilidade .container > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+}
 
 .c-feature { display: flex; gap: 16px; margin-bottom: 24px; }
 .c-feature i { font-size: 2.5rem; color: var(--accent-gold); }
