@@ -521,8 +521,8 @@ img {
 
 .footer-links h4, .footer-contact h4 { margin-bottom: 24px; font-size: 1.2rem; }
 .footer-links ul li { margin-bottom: 12px; }
-.footer-links ul li a { color: var(--text-light); }
-.footer-links ul li a:hover { color: var(--accent-gold); }
+.footer-links ul li a, .footer-contact ul li a { color: var(--text-light); }
+.footer-links ul li a:hover, .footer-contact ul li a:hover { color: var(--accent-gold); }
 .footer-contact ul li { display: flex; gap: 10px; align-items: center; color: var(--text-light); margin-bottom: 15px; }
 
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
