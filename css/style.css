@@ -479,7 +479,7 @@ img {
   gap: 60px;
   margin: 0;
 }
-.col-text, .col-form {
+.col-text, .col-form, .col-img {
   flex: 1;
   min-width: 300px;
 }
