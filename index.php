@@ -159,29 +159,29 @@ $gallery = $stmt->fetchAll();
                 <div class="section-header reveal-up" style="text-align: center; margin-bottom: 50px;">
                     <div class="badge">Estratégico</div>
                     <h2 class="section-title"><?php echo getContent('importancia', 'title', 'A importância do beneficiamento desses materiais'); ?></h2>
-                    <p style="max-width: 750px; margin: 0 auto; font-size: 1.05rem;"><?php echo getContent('importancia', 'subtitle', 'A moagem e a fundição têm como objetivo adequar o produto...'); ?></p>
+                    <p style="max-width: 750px; margin: 0 auto; font-size: 1.05rem;"><?php echo getContent('importancia', 'subtitle', 'A moagem e a fundição de materiais têm como objetivo adequar o produto à concentração e ao formato ideal, atendendo às exigências técnicas do mercado global.'); ?></p>
                 </div>
 
                 <div class="reveal-up" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
                     <div class="c-feature">
                         <i class="ph ph-checks"></i>
                         <div>
-                            <h5>Redução de desperdícios</h5>
-                            <span>Processo fundamental para valorizar o seu resíduo e oferecer preço competitivo.</span>
+                            <h5>Redução de desperdícios na sua empresa</h5>
+                            <span>Todo esse processo é fundamental para reduzir desperdícios, valorizar o seu resíduo e oferecer um preço muito mais competitivo. Além disso, permite a diversificação de aplicações no setor, gerando novas e melhores oportunidades de negócio.</span>
                         </div>
                     </div>
-                    <div class="c-feature">
+                    <div class="c-feature" style="--delay: 0.1s">
                         <i class="ph ph-currency-circle-dollar"></i>
                         <div>
                             <h5>Valorização de Mercado</h5>
                             <span>Materiais antes descartados passam a ter alto valor na agricultura e outros setores.</span>
                         </div>
                     </div>
-                    <div class="c-feature">
+                    <div class="c-feature" style="--delay: 0.2s">
                         <i class="ph ph-leaf"></i>
                         <div>
                             <h5>Indispensável na Agricultura</h5>
-                            <span>Essencial para a fabricação de fertilizantes e insumos.</span>
+                            <span>O produto beneficiado é essencial para a fabricação de fertilizantes e insumos.</span>
                         </div>
                     </div>
                 </div>
@@ -192,11 +192,18 @@ $gallery = $stmt->fetchAll();
         <section id="sustentabilidade" class="section-padding">
             <div class="container text-center">
                 <div class="badge">Meio Ambiente</div>
-                <h2 class="section-title"><?php echo getContent('sustentabilidade', 'title', 'Sustentabilidade e Compromisso Comercial'); ?></h2>
-                <p style="max-width: 750px; margin: 0 auto 20px; font-size: 1.05rem;"><?php echo getContent('sustentabilidade', 'body', 'Nosso processo segue todas as normas vigentes...'); ?></p>
+                <h2 class="section-title"><?php echo getContent('sustentabilidade', 'title', 'Sustentabilidade e Compromisso Ambiental'); ?></h2>
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <p style="font-size: 1.1rem; margin-bottom: 30px;">Nosso processo segue todas as normas vigentes, com total compromisso ambiental e sustentabilidade.</p>
+                    <p style="margin-bottom: 30px;">A Resimetal tem como pilar fundamental a preservação do meio ambiente através da reciclagem consciente. Transformamos resíduos industriais em novos recursos, promovendo a economia circular e reduzindo drasticamente o impacto ambiental na região de Mogi das Cruzes e em toda a cadeia produtiva.</p>
+                </div>
                 <div class="reveal-up" style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 30px;">
-                    <div class="feature-item"><i class="ph ph-recycle"></i> <span>Economia Circular</span></div>
-                    <div class="feature-item"><i class="ph ph-shield-check"></i> <span>Normas Ambientais</span></div>
+                    <div class="feature-item" style="display: flex; align-items: center; gap: 8px; color: #158E12; font-weight: 600;">
+                        <i class="ph ph-recycle" style="font-size: 1.5rem;"></i> <span>Economia Circular</span>
+                    </div>
+                    <div class="feature-item" style="display: flex; align-items: center; gap: 8px; color: #158E12; font-weight: 600;">
+                        <i class="ph ph-shield-check" style="font-size: 1.5rem;"></i> <span>Normas Ambientais</span>
+                    </div>
                 </div>
             </div>
         </section>
