@@ -271,21 +271,21 @@ $gallery = $stmt->fetchAll();
                     <div class="col-text reveal-up">
                         <ul class="contact-info">
                         <li>
-                            <i class="ph-fill ph-phone text-primary"></i>
+                            <i class="ph-fill ph-phone" style="color: #158E12;"></i>
                             <div>
                                 <span>Telefone</span>
                                 <strong><a href="tel:+5511947132326">(11) 94713-2326</a></strong>
                             </div>
                         </li>
                         <li>
-                            <i class="ph-fill ph-envelope-simple text-primary"></i>
+                            <i class="ph-fill ph-envelope-simple" style="color: #158E12;"></i>
                             <div>
                                 <span>E-mail comercial</span>
                                 <strong><a href="mailto:comercial@resimetalbeneficiamentos.com.br">comercial@resimetalbeneficiamentos.com.br</a></strong>
                             </div>
                         </li>
                         <li>
-                            <i class="ph-fill ph-map-pin text-primary"></i>
+                            <i class="ph-fill ph-map-pin" style="color: #158E12;"></i>
                             <div>
                                 <span>Endereço</span>
                                 <strong>
@@ -317,7 +317,7 @@ $gallery = $stmt->fetchAll();
                             <label>Mensagem</label>
                             <textarea rows="3" placeholder="Como podemos ajudar?"></textarea>
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit">
+                        <button class="btn btn-block" type="submit" style="background-color: #158E12; color: white;">
                             <i class="ph-fill ph-paper-plane-right"></i> Enviar Mensagem
                         </button>
                     </form>
