@@ -30,6 +30,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <li class="<?php echo $currentPage == 'marketing.php' ? 'active' : ''; ?>">
                 <a href="marketing.php"><i class="ph ph-megaphone"></i> <span>Marketing & SEO</span></a>
             </li>
+            <li class="<?php echo $currentPage == 'usuarios.php' ? 'active' : ''; ?>">
+                <a href="usuarios.php"><i class="ph ph-user-gear"></i> <span>Usuários</span></a>
+            </li>
         </nav>
         <a href="logout.php" class="btn-logout"><i class="ph ph-sign-out"></i> Sair</a>
     </aside>
