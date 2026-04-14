@@ -27,8 +27,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <li class="<?php echo $currentPage == 'galeria.php' ? 'active' : ''; ?>">
                 <a href="galeria.php"><i class="ph ph-image"></i> <span>Galeria</span></a>
             </li>
-            <li class="<?php echo $currentPage == 'marketing.php' ? 'active' : ''; ?>">
-                <a href="marketing.php"><i class="ph ph-megaphone"></i> <span>Marketing & SEO</span></a>
+            <li class="<?php echo $currentPage == 'seo.php' ? 'active' : ''; ?>">
+                <a href="seo.php"><i class="ph ph-google-logo"></i> <span>Gerenciar SEO</span></a>
             </li>
             <li class="<?php echo $currentPage == 'usuarios.php' ? 'active' : ''; ?>">
                 <a href="usuarios.php"><i class="ph ph-user-gear"></i> <span>Usuários</span></a>

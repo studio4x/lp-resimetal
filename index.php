@@ -18,26 +18,42 @@ $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.c
 $logoPath = getContent('images', 'logo_path', 'assets/logotipo-resimetal-transparente-otimizado.webp');
 $heroBg = getContent('images', 'hero_bg_path', '');
 $faviconPath = getContent('images', 'favicon_path', 'assets/favicon.ico');
+
+// Configurações Globais de SEO
+$siteTitle = getSetting('site_title', 'Resimetal | Moagem e Fundição de Resíduos de Zinco');
+$siteDesc = getSetting('site_description', 'Especialistas em moagem, peneiramento e fundição de resíduos de zinco há mais de 20 anos.');
+$siteKeywords = getSetting('site_keywords', 'zinco, moagem, resíduos industriais, fundição, beneficiamento');
+$googleVerify = getSetting('google_verification', 'HSfLrgBat8BteoEb4mX7tRDnE2SwyJ9XvcZi96ebkik');
+$canonicalUrl = getSetting('canonical_url', 'https://resimetalbeneficiamentos.com.br/');
+
+// Open Graph (Social)
+$ogTitle = getSetting('og_title', $siteTitle);
+$ogDesc = getSetting('og_description', $siteDesc);
+$ogImg = getSetting('og_image_path', 'assets/logotipo-resimetal-transparente-otimizado.webp');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars(getSetting('site_title', 'Resimetal | Moagem e Fundição de Resíduos de Zinco')); ?></title>
+    <title><?php echo htmlspecialchars($siteTitle); ?></title>
     
     <!-- Favicon Dinâmico -->
     <link rel="icon" type="image/x-icon" href="<?php echo $faviconPath; ?>">
     <link rel="shortcut icon" href="<?php echo $faviconPath; ?>">
 
-    <link rel="canonical" href="https://resimetalbeneficiamentos.com.br/" />
-    <meta name="description" content="<?php echo htmlspecialchars(getSetting('site_description', 'Especialistas em moagem, peneiramento e fundição de resíduos de zinco há mais de 20 anos.')); ?>">
-    <meta name="google-site-verification" content="HSfLrgBat8BteoEb4mX7tRDnE2SwyJ9XvcZi96ebkik" />
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<?php echo htmlspecialchars($siteDesc); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($siteKeywords); ?>">
+    <link rel="canonical" href="<?php echo $canonicalUrl; ?>" />
+    <meta name="google-site-verification" content="<?php echo $googleVerify; ?>" />
     
-    <!-- SEO / Google Search -->
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:site_name" content="Resimetal">
-    <meta property="og:title" content="Moagem e Fundição de Resíduos de Zinco">
-    <meta property="og:url" content="https://resimetalbeneficiamentos.com.br/">
+    <meta property="og:title" content="<?php echo htmlspecialchars($ogTitle); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($ogDesc); ?>">
+    <meta property="og:image" content="<?php echo BASE_URL . $ogImg; ?>">
+    <meta property="og:url" content="<?php echo $canonicalUrl; ?>">
     <meta property="og:type" content="website">
     
     <!-- Scripts de Marketing (Cabeçalho) -->
