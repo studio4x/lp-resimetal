@@ -88,6 +88,21 @@ $gallery = $stmt->fetchAll();
                         <a href="https://wa.me/5511947132326" target="_blank" class="btn btn-primary">Solicitar Orçamento</a>
                         <a href="#servicos" class="btn btn-outline">Conheça nossos serviços</a>
                     </div>
+
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i class="ph ph-shield-check"></i>
+                            <span>+ de 20 anos de mercado</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="ph ph-recycle"></i>
+                            <span>Redução de desperdícios</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="ph ph-trend-up"></i>
+                            <span>Valorização de resíduos</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
