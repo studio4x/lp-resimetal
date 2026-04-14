@@ -548,3 +548,21 @@ img {
   font-size: 34px;
 }
 .whatsapp-float:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+
+/* Scroll to Top */
+.scroll-top {
+  position: fixed; bottom: 110px; right: 30px;
+  background-color: var(--bg-main); color: white;
+  width: 50px; height: 50px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 998; transition: all 0.3s ease;
+  font-size: 24px; cursor: pointer; border: none;
+  opacity: 0; visibility: hidden;
+}
+.scroll-top.active { opacity: 1; visibility: visible; }
+.scroll-top:hover { 
+  background-color: var(--accent-gold); 
+  color: var(--bg-main);
+  transform: translateY(-5px); 
+}
