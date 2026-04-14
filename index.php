@@ -11,7 +11,9 @@ $gallery = $stmt->fetchAll();
 
 // Cache de conteúdos comuns
 $whatsappText = getContent('global', 'whatsapp_text', '(11) 94713-2326');
-$whatsappLink = getContent('global', 'whatsapp_link', 'https://wa.me/5511947132326');
+$whatsappNum = getContent('global', 'whatsapp_link', '5511947132326');
+$whatsappMsg = getContent('global', 'whatsapp_float_msg', 'Olá! Gostaria de um orçamento.');
+$whatsappLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $whatsappNum) . "?text=" . urlencode($whatsappMsg);
 $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.com.br');
 
 // Imagens do Sistema
@@ -405,5 +407,10 @@ $ogImg = getSetting('og_image_path', 'assets/logotipo-resimetal-transparente-oti
     <?php echo getSetting('footer_scripts'); ?>
 
     <script src="js/script.js?v=2.3"></script>
+
+    <!-- WhatsApp Flutuante -->
+    <a href="<?php echo $whatsappLink; ?>" target="_blank" class="whatsapp-float" aria-label="Falar pelo WhatsApp">
+        <i class="ph-fill ph-whatsapp-logo"></i>
+    </a>
 </body>
 </html>

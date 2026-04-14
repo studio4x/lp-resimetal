@@ -47,8 +47,12 @@ function getVal($section, $key) {
                 <input type="text" name="content[whatsapp_text]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_text')); ?>">
             </div>
             <div class="form-group">
-                <label>WhatsApp Link (wa.me/5511...)</label>
+                <label>WhatsApp Link (Apenas números: 5511947132326)</label>
                 <input type="text" name="content[whatsapp_link]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_link')); ?>">
+            </div>
+            <div class="form-group">
+                <label>Mensagem Pré-definida (Botão Flutuante)</label>
+                <input type="text" name="content[whatsapp_float_msg]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_float_msg')); ?>" placeholder="Ex: Olá! Gostaria de um orçamento.">
             </div>
             <div class="form-group">
                 <label>E-mail Comercial</label>
