@@ -49,7 +49,7 @@ $mMonth = $stmt->fetch() ?: ['pv' => 0, 'uv' => 0];
 <div class="card-admin">
     <h3>Ações Rápidas</h3>
     <p style="color: #6B7280; margin-bottom: 20px;">Utilize o menu lateral para gerenciar as seções do site, as fotos da galeria ou configurar tags de marketing.</p>
-    <div style="display: flex; gap: 15px;">
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
         <a href="conteudo.php" class="btn-save" style="text-decoration: none;">Editar Conteúdo</a>
         <a href="galeria.php" class="btn-save" style="text-decoration: none; background: #3b82f6;">Gerenciar Galeria</a>
     </div>

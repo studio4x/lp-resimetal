@@ -12,7 +12,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <title>Painel Admin | Resimetal</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="css/admin-style.css?v=<?php echo BUILD_VERSION; ?>">
 </head>
 <body>
     <div class="mobile-overlay" id="mobileOverlay"></div>
