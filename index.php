@@ -13,6 +13,11 @@ $gallery = $stmt->fetchAll();
 $whatsappText = getContent('global', 'whatsapp_text', '(11) 94713-2326');
 $whatsappLink = getContent('global', 'whatsapp_link', 'https://wa.me/5511947132326');
 $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.com.br');
+
+// Imagens do Sistema
+$logoPath = getContent('images', 'logo_path', 'assets/logotipo-resimetal-transparente-otimizado.webp');
+$heroBg = getContent('images', 'hero_bg_path', '');
+$faviconPath = getContent('images', 'favicon_path', 'assets/favicon.ico');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,6 +25,11 @@ $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.c
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars(getSetting('site_title', 'Resimetal | Moagem e Fundição de Resíduos de Zinco')); ?></title>
+    
+    <!-- Favicon Dinâmico -->
+    <link rel="icon" type="image/x-icon" href="<?php echo $faviconPath; ?>">
+    <link rel="shortcut icon" href="<?php echo $faviconPath; ?>">
+
     <link rel="canonical" href="https://resimetalbeneficiamentos.com.br/" />
     <meta name="description" content="<?php echo htmlspecialchars(getSetting('site_description', 'Especialistas em moagem, peneiramento e fundição de resíduos de zinco há mais de 20 anos.')); ?>">
     <meta name="google-site-verification" content="HSfLrgBat8BteoEb4mX7tRDnE2SwyJ9XvcZi96ebkik" />
@@ -43,6 +53,18 @@ $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.c
     <style>
         .header .logo-img { height: 65px; width: auto; }
         @media (max-width: 768px) { .header .logo-img { height: 50px; } }
+        
+        /* Hero Dinâmica */
+        <?php if($heroBg): ?>
+        .hero {
+            background-image: url('<?php echo $heroBg; ?>') !important;
+            background-size: cover;
+            background-position: center;
+        }
+        .hero::before {
+            background: linear-gradient(to right, rgba(10, 58, 82, 0.9) 0%, rgba(10, 58, 82, 0.4) 100%) !important;
+        }
+        <?php endif; ?>
     </style>
 </head>
 <body>
@@ -56,7 +78,7 @@ $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.c
         </div>
         <div class="container header-container">
             <a href="#" class="logo">
-                <img src="assets/logotipo-resimetal-transparente-otimizado.webp" alt="Logotipo Resimetal" class="logo-img">
+                <img src="<?php echo $logoPath; ?>" alt="Logotipo Resimetal" class="logo-img">
             </a>
             
             <button class="mobile-menu-toggle" aria-label="Abrir menu">
@@ -334,7 +356,7 @@ $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.c
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="assets/logotipo-resimetal-transparente-otimizado.webp" alt="Resimetal" class="footer-logo-img">
+                <img src="<?php echo $logoPath; ?>" alt="Resimetal" class="footer-logo-img">
                 <p><?php echo getContent('contato', 'footer_brand_text', 'Referência em processos de moagem, peneiramento e fundição de resíduos de zinco há mais de 20 anos.'); ?></p>
             </div>
             <div class="footer-links">
