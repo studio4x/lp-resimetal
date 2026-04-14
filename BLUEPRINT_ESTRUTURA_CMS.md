@@ -1,123 +1,115 @@
-# Blueprint Técnico: Estrutura CMS Dinâmico Resimetal
+# Blueprint Técnico: Arquitetura de CMS Dinâmico (Core)
 
-Este documento serve como guia para replicar a arquitetura deste site em outros projetos, garantindo um painel administrativo robusto, 100% dinâmico e focado em SEO.
-
-## 1. Tecnologias Core
-- **Backend**: PHP 7.4+ (Procedural para simplicidade e performance).
-- **Banco de Dados**: MySQL/MariaDB (PDO para segurança).
-- **Frontend**: HTML5, CSS3, JavaScript Vanilla.
-- **Bibliotecas**: Phosphor Icons (Ícones), SortableJS (Ordenação).
+Este documento descreve a infraestrutura técnica necessária para implementar e replicar o ecossistema de gerenciamento administrativo (CMS) desenvolvido, focado em alta performance e total autonomia via painel.
 
 ---
 
-## 2. Arquitetura de Diretórios
+## 1. Tecnologias Requeridas
+- **Backend**: PHP 7.4+ (Procedural).
+- **Banco de Dados**: MySQL/MariaDB (Acesso via PDO).
+- **Frontend**: HTML5 Semântico, CSS3 (Vanilla + Media Queries), JavaScript Vanilla.
+- **Bibliotecas**: Phosphor Icons (Ícones do Sistema), SortableJS (Lógica de Drag & Drop).
+
+---
+
+## 2. Arquitetura de Diretórios (Padrão)
 ```text
 /
-├── admin/                  # Painel Administrativo
-│   ├── css/                # Estilos do Admin
-│   ├── includes/           # Header/Footer do Admin (Layout)
-│   ├── uploads/            # Pasta física das imagens (CHMOD 755/777)
-│   ├── conteudo.php        # Gerenciador de textos (Site Content)
-│   ├── galeria.php         # Gerenciador de fotos + Ativos do Sistema
-│   ├── seo.php             # Central de SEO & Marketing
-│   └── api_update_order.php # Endpoint AJAX para ordenação
-├── css/                    # Estilos do Site
-├── js/                     # Scripts do Site
-├── includes/               # Lógica Principal do Sistema
-│   ├── config.php          # Conexão PDO e Constantes (BASE_URL)
-│   └── functions.php       # Funções de Auth, Conteúdo e Upload
-└── index.php               # Front-end Dinâmico
+├── admin/                  # Núcleo Administrativo
+│   ├── css/                # Estilos do Painel
+│   ├── includes/           # Componentes de Layout Reutilizáveis
+│   ├── uploads/            # Armazenamento físico de ativos gerenciáveis
+│   ├── conteudo.php        # Gerenciamento de Entidades de Texto
+│   ├── galeria.php         # Gerenciador de Ativos (Geral e Galeria)
+│   ├── seo.php             # Dashboard de Metadados e Scripts
+│   └── api_update_order.php # Endpoint de Persistência de Ordenação
+├── css/                    # Estilos da Aplicação
+├── js/                     # Inteligência de Frontend
+├── includes/               # Motor da Plataforma
+│   ├── config.php          # Conexão de Dados e Variáveis Globais
+│   └── functions.php       # Core de Funções (Conteúdo, Auth e Upload)
+└── index.php               # Aplicação Principal Dinâmica
 ```
 
 ---
 
-## 3. Esquema do Banco de Dados (Schema)
+## 3. Estrutura de Dados (Database Schema)
 
-### Tabela: `admins`
-Armazena os usuários do painel.
-- `id`: INT PK AI
-- `username`: VARCHAR(50) UNIQUE
-- `password`: VARCHAR(255) (Hash BCrypt)
+### `admins`
+Controle de acessos administrativos.
+- `id`: INT (PK AI)
+- `username`: VARCHAR (50)
+- `password`: VARCHAR (255) (Hash seguro)
 
-### Tabela: `site_content`
-Coração do dinamismo. Mapeia textos por seções.
-- `id`: INT PK AI
-- `section`: VARCHAR(50) (Ex: 'hero', 'quem_somos', 'global')
-- `content_key`: VARCHAR(100) (Ex: 'title', 'whatsapp_number')
+### `site_content`
+Mapeamento de chaves de texto dinâmicas.
+- `id`: INT (PK AI)
+- `section`: VARCHAR (50) (Ex: 'global', 'home')
+- `content_key`: VARCHAR (100) (Identificador Único)
 - `content_value`: TEXT
 
-### Tabela: `site_settings`
-Configurações globais e SEO (Usa par Nome-Valor).
-- `name`: VARCHAR(100) PRIMARY KEY
+### `site_settings`
+Configurações de sistema e metadados de SEO.
+- `name`: VARCHAR (100) (PK)
 - `value`: TEXT
 
-### Tabela: `gallery_images`
-Imagens do carrossel com suporte a ordenação.
-- `id`: INT PK AI
-- `image_path`: VARCHAR(255)
-- `caption`: TEXT (Usado como Alt Text)
-- `sort_order`: INT (Padrão: 0)
+### `gallery_images`
+Gerenciamento de coleções visuais ordenáveis.
+- `id`: INT (PK AI)
+- `image_path`: VARCHAR (255) (Caminho absoluto ou relativo)
+- `caption`: TEXT (Metadado de Alt Text)
+- `sort_order`: INT (Índice de prioridade de exibição)
 
 ---
 
-## 4. Lógicas Fundamentais (`functions.php`)
+## 4. Lógica de Integração (Functions Core)
 
-### Busca de Conteúdo Dinâmico
+### Recuperação de Conteúdo
 ```php
 function getContent($section, $key, $default = "") {
-    // Busca na tabela site_content. 
-    // Se não existir, retorna o $default (fallback) e cria o registro.
+    // Busca na site_content por SECTION e KEY.
+    // Retorna content_value ou $default em caso de ausência.
 }
 ```
 
-### Configurações de SEO
+### Recuperação de Configurações Técnicas
 ```php
 function getSetting($name, $default = "") {
-    // Busca na tabela site_settings.
+    // Busca na site_settings por NAME.
 }
 ```
 
-### Processamento de Imagens
+### Processador de Upload
 ```php
 function uploadImage($file) {
-    // 1. Valida extensão (webp, jpg, png).
-    // 2. Renomeia com time() + nome original.
-    // 3. Move para admin/uploads/.
-    // 4. Retorna o caminho relativo (admin/uploads/nome.webp).
+    // Higieniza nomes de arquivos.
+    // Move para o diretório de uploads do admin.
+    // Retorna o path para persistência no banco.
 }
 ```
 
 ---
 
-## 5. Implementações Especiais
+## 5. Especificações do Painel Administrativo
 
-### Galeria (Drag & Drop)
-1. Listar imagens ordenadas por `sort_order ASC`.
-2. Usar `SortableJS` no container da lista.
-3. No evento `onEnd`, capturar os IDs e enviar via `fetch()` para `admin/api_update_order.php`.
+### Gerenciador de Ativos e Ordenação
+- **Listagem**: As imagens devem ser recuperadas utilizando `ORDER BY sort_order ASC`.
+- **Drag & Drop**: Implementação via `SortableJS` no container de itens.
+- **Persistência**: Envio do array de novos índices via AJAX (JSON) para processamento em massa no backend.
 
-### Central de SEO
-1. Integrar campos para `og:title`, `og_description` e `og_image_path`.
-2. No `index.php`, concatenar o `BASE_URL` com o caminho da imagem para garantir que o WhatsApp carregue a miniatura.
+### Central de Metadados e SEO
+- Dashboard para gestão de Tags de Redes Sociais (`og:image`, `og:title`).
+- Campos de inserção de Scripts Externos (Tracking) em seções específicas da aplicação.
 
-### Cache Busting
-Sempre chamar o CSS passando uma versão: `<link rel="stylesheet" href="css/style.css?v=2.8">`. Incrementar no `index.php` a cada alteração visual.
-
----
-
-## 6. Checklist para Novos Projetos
-- [ ] Criar as 4 tabelas no banco de dados.
-- [ ] Configurar `includes/config.php` (DB_NAME, DB_HOST, DB_USER, DB_PASS).
-- [ ] Copiar pasta `admin/` e `includes/`.
-- [ ] Mapear seções do novo site e preencher fallbacks em cada `getContent()`.
-- [ ] Registrar o primeiro usuário admin via script ou SQL seguro.
+### Design Responsivo (Mobile Admin)
+- **Menu Off-canvas**: Ocultação lateral do painel de navegação em telas < 768px.
+- **Layer de Overlay**: Fechamento de menu via clique em área neutra.
+- **Grids Fluidas**: Forçamento de colunas únicas em formulários complexos para garantir usabilidade em dispositivos móveis.
 
 ---
 
-## 7. Responsividade do Admin (Mobile Friendly)
-Para garantir o controle via dispositivos móveis, a estrutura segue:
-- **Menu Off-canvas**: No mobile (< 768px), a sidebar é oculta (`left: -100%`) e ativada por um `mobile-toggle`.
-- **Overlay Dinâmico**: Uma camada de fundo (`.mobile-overlay`) permite fechar o menu ao clicar fora dele.
-- **Grids Adaptativos**: Uso de `grid-template-columns: 1fr !important` para garantir que formulários complexos não quebrem o layout horizontal.
-- **Toque Otimizado**: Padding reduzido e áreas de clique aumentadas para navegação rápida de polegar.
-
+## 6. Fluxo de Instalação para Novos Projetos
+1. Setup do banco de dados (4 tabelas core).
+2. Configuração do `includes/config.php` com credenciais de ambiente.
+3. Definição das `keys` de conteúdo no código da aplicação utilizando a função `getContent()`.
+4. Mapeamento de ativos do sistema (Logos/Banners) no gerenciador de galeria.
