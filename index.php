@@ -5,8 +5,8 @@ require_once('includes/functions.php');
 // Registrar visita (Métricas)
 logVisitor();
 
-// Buscar Galeria
-$stmt = $conn->query("SELECT * FROM gallery_images ORDER BY id DESC");
+// Buscar Galeria Ordenada
+$stmt = $conn->query("SELECT * FROM gallery_images ORDER BY sort_order ASC, id DESC");
 $gallery = $stmt->fetchAll();
 
 // Cache de conteúdos comuns

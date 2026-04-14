@@ -13,13 +13,12 @@ function getImgPath($key) {
     return $row ? $row['content_value'] : "";
 }
 
-// 1. Processar Imagens do Sistema (Logo, Hero, Favicon)
+// 1. Processar Imagens do Sistema
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_system_image'])) {
     $key = $_POST['image_key'];
     if (!empty($_FILES['image']['name'])) {
         $path = uploadImage($_FILES['image']);
         if ($path) {
-            // Se já existia uma imagem customizada, poderíamos apagar a antiga aqui (opcional)
             $stmt = $conn->prepare("INSERT INTO site_content (section, content_key, content_value) 
                                     VALUES ('images', ?, ?) 
                                     ON DUPLICATE KEY UPDATE content_value = ?");
@@ -37,8 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
         $path = uploadImage($_FILES['image']);
         if ($path) {
             $caption = $_POST['caption'] ?? "";
-            $stmt = $conn->prepare("INSERT INTO gallery_images (image_path, caption) VALUES (?, ?)");
-            $stmt->execute([$path, $caption]);
+            // Buscar a última ordem para inserir no fim
+            $stmt = $conn->query("SELECT MAX(sort_order) as max_order FROM gallery_images");
+            $max = $stmt->fetch();
+            $newOrder = ($max['max_order'] ?? 0) + 1;
+
+            $stmt = $conn->prepare("INSERT INTO gallery_images (image_path, caption, sort_order) VALUES (?, ?, ?)");
+            $stmt->execute([$path, $caption, $newOrder]);
             $msg = "Imagem adicionada à galeria!";
         } else {
             $error = "Erro no upload para a galeria.";
@@ -61,8 +65,8 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Buscar todas as imagens da galeria
-$stmt = $conn->query("SELECT * FROM gallery_images ORDER BY id DESC");
+// Buscar todas as imagens da galeria ORDENADAS
+$stmt = $conn->query("SELECT * FROM gallery_images ORDER BY sort_order ASC, id DESC");
 $images = $stmt->fetchAll();
 ?>
 
@@ -140,6 +144,12 @@ $images = $stmt->fetchAll();
 <!-- SEÇÃO: GALERIA CARROSSEL -->
 <div class="card-admin" style="margin-bottom: 40px;">
     <h2>Galeria do Carrossel (Operação)</h2>
+    
+    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem; color: #1e40af;">
+        <i class="ph ph-info" style="font-size: 1.1rem; vertical-align: middle;"></i> 
+        <strong>Ordenação:</strong> Clique e arraste as imagens abaixo para reorganizar a ordem de exibição no site. A alteração é salva automaticamente.
+    </div>
+
     <form method="POST" enctype="multipart/form-data" style="display: flex; gap: 20px; align-items: flex-end; margin-top: 15px;">
         <div class="form-group" style="flex: 2; margin-bottom: 0;">
             <label>Adicionar Foto à Galeria</label>
@@ -152,21 +162,67 @@ $images = $stmt->fetchAll();
         <button type="submit" name="upload_gallery" class="btn-save">Fazer Upload</button>
     </form>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; margin-top: 30px;">
+    <div id="sortable-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; margin-top: 30px;">
         <?php foreach($images as $img): ?>
-            <div style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fafafa; position: relative;">
-                <img src="../<?php echo $img['image_path']; ?>" style="width: 100%; height: 120px; object-fit: cover;">
-                <div style="padding: 10px; font-size: 0.75rem; color: #666; height: 40px; overflow: hidden;">
+            <div data-id="<?php echo $img['id']; ?>" class="gallery-item-sortable" style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fafafa; position: relative; cursor: grab;">
+                <img src="../<?php echo $img['image_path']; ?>" style="width: 100%; height: 120px; object-fit: cover; pointer-events: none;">
+                <div style="padding: 10px; font-size: 0.75rem; color: #666; height: 40px; overflow: hidden; pointer-events: none;">
                     <?php echo htmlspecialchars($img['caption']); ?>
                 </div>
                 <a href="?delete=<?php echo $img['id']; ?>" 
                    onclick="return confirm('Excluir esta foto da galeria?')"
-                   style="position: absolute; top: 5px; right: 5px; background: rgba(220, 38, 38, 0.8); color: white; padding: 4px; border-radius: 4px; text-decoration: none;">
+                   style="position: absolute; top: 5px; right: 5px; background: rgba(220, 38, 38, 0.8); color: white; padding: 4px; border-radius: 4px; text-decoration: none; z-index: 10;">
                     <i class="ph ph-trash"></i>
                 </a>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const el = document.getElementById('sortable-gallery');
+    if (el) {
+        Sortable.create(el, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function() {
+                const order = [];
+                document.querySelectorAll('.gallery-item-sortable').forEach((item) => {
+                    order.push(item.getAttribute('data-id'));
+                });
+
+                // Enviar para a API
+                fetch('api_update_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ order: order })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Ordem salva com sucesso!');
+                    } else {
+                        alert('Erro ao salvar a ordem: ' + data.error);
+                    }
+                });
+            }
+        });
+    }
+});
+</script>
+
+<style>
+.sortable-ghost {
+    opacity: 0.4;
+    background: #e5e7eb !important;
+}
+.gallery-item-sortable:active {
+    cursor: grabbing;
+}
+</style>
 
 <?php include('includes/footer.php'); ?>
