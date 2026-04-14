@@ -251,6 +251,10 @@ $gallery = $stmt->fetchAll();
                         <button class="accordion-header">Onde a Resimetal está localizada? <i class="ph ph-caret-down"></i></button>
                         <div class="accordion-content"><p>Estamos em Mogi das Cruzes - SP, no bairro Taboão. Estrada Eng. Abilio Gondim Pereira, 480.</p></div>
                     </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">Como os lingotes são utilizados? <i class="ph ph-caret-down"></i></button>
+                        <div class="accordion-content"><p>Os lingotes de zinco tem diversas aplicações entre elas: Retorna para os banhos na galvanização a fogo ou para produção de óxidos de zinco.</p></div>
+                    </div>
                 </div>
             </div>
         </section>
