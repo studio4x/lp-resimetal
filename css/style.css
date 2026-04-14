@@ -528,7 +528,8 @@ img {
 .footer-links ul li a:hover, .footer-contact ul li a:hover { color: var(--accent-gold); }
 .footer-contact ul li { display: flex; gap: 10px; align-items: center; color: var(--text-light); margin-bottom: 15px; }
 
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center; font-size: 0.9rem; color: var(--text-white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center; font-size: 0.9rem; }
+.footer-bottom p { color: #ffffff !important; opacity: 1 !important; }
 
 /* =========================================
    ANIMATIONS (Reveal)

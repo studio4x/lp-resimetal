@@ -68,7 +68,7 @@ $ogImg = getSetting('og_image_path', 'assets/logotipo-resimetal-transparente-oti
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
-    <link rel="stylesheet" href="css/style.css?v=2.6">
+    <link rel="stylesheet" href="css/style.css?v=2.7">
     <style>
         .header .logo-img { height: 65px; width: auto; }
         @media (max-width: 768px) { .header .logo-img { height: 50px; } }
