@@ -5,7 +5,7 @@ Siga estes passos para criar um novo site institucional em minutos utilizando a 
 ## 1. Clonagem e Banco de Dados
 1. Copie toda a pasta deste projeto para o novo repositório do cliente.
 2. No PHPMyAdmin (ou painel Hostinger), crie um novo banco de dados.
-3. Importe o arquivo `database/master_schema.sql`.
+3. Importe o arquivo `REPLICATION_PACK/master_schema.sql`.
    - *Nota: O usuário padrão é `admin` e a senha inicial é `admin123`.*
 
 ## 2. Configurações Iniciais
