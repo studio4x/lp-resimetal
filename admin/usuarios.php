@@ -84,7 +84,7 @@ $users = $stmt->fetchAll();
     </div>
 <?php endif; ?>
 
-<div class="admin-grid-field">
+<div class="admin-grid-2">
     <!-- Alterar Senha Própria -->
     <div class="card-admin">
         <h2>Alterar Minha Senha</h2>
@@ -124,7 +124,8 @@ $users = $stmt->fetchAll();
 
 <div class="card-admin" style="margin-top: 30px;">
     <h2>Administradores Cadastrados</h2>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 320px;">
         <thead>
             <tr style="text-align: left; border-bottom: 2px solid #eee;">
                 <th style="padding: 12px;">Usuário</th>
@@ -155,6 +156,7 @@ $users = $stmt->fetchAll();
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 </div>
 
 <?php include('includes/footer.php'); ?>
