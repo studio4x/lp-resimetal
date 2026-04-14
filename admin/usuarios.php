@@ -51,21 +51,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_pass'])) {
     }
 }
 
-// 3. Processar Exclusão de Usuário
-if (isset($_GET['delete'])) {
-    $idDel = (int)$_GET['delete'];
-    if ($idDel === $meId) {
-        $error = "Você não pode excluir a si mesmo.";
+// 4. Processar Redefinição de Senha por Super Admin
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_user_pass'])) {
+    // Verificar se quem está logado é o 'admin'
+    $stmt = $conn->prepare("SELECT username FROM admin_users WHERE id = ?");
+    $stmt->execute([$meId]);
+    $meUser = $stmt->fetch();
+
+    if ($meUser['username'] === 'admin') {
+        $targetId = (int)$_POST['target_user_id'];
+        $newPass = $_POST['new_password_reset'];
+
+        if (!empty($newPass)) {
+            $newHash = password_hash($newPass, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE admin_users SET password_hash = ? WHERE id = ?");
+            $stmt->execute([$newHash, $targetId]);
+            $msg = "A senha do usuário foi redefinida com sucesso!";
+        } else {
+            $error = "A nova senha não pode estar vazia.";
+        }
     } else {
-        $stmt = $conn->prepare("DELETE FROM admin_users WHERE id = ?");
-        $stmt->execute([$idDel]);
-        $msg = "Usuário removido com sucesso!";
+        $error = "Apenas o administrador principal pode redefinir senhas de terceiros.";
     }
 }
 
 // Buscar todos os usuários
 $stmt = $conn->query("SELECT id, username, created_at FROM admin_users ORDER BY id ASC");
 $users = $stmt->fetchAll();
+
+// Verificar se sou o admin principal
+$stmt = $conn->prepare("SELECT username FROM admin_users WHERE id = ?");
+$stmt->execute([$meId]);
+$isSuperAdmin = ($stmt->fetch()['username'] === 'admin');
 ?>
 
 <div class="header-page">
@@ -125,11 +142,12 @@ $users = $stmt->fetchAll();
 <div class="card-admin" style="margin-top: 30px;">
     <h2>Administradores Cadastrados</h2>
     <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 320px;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 600px;">
         <thead>
             <tr style="text-align: left; border-bottom: 2px solid #eee;">
                 <th style="padding: 12px;">Usuário</th>
                 <th style="padding: 12px;">Data Criação</th>
+                <?php if($isSuperAdmin): ?><th style="padding: 12px;">Redefinir Senha (Super Admin)</th><?php endif; ?>
                 <th style="padding: 12px; text-align: right;">Ações</th>
             </tr>
         </thead>
@@ -143,6 +161,22 @@ $users = $stmt->fetchAll();
                     <td style="padding: 12px; color: #666; font-size: 0.9rem;">
                         <?php echo date('d/m/Y H:i', strtotime($u['created_at'])); ?>
                     </td>
+                    <?php if($isSuperAdmin): ?>
+                    <td style="padding: 12px;">
+                        <?php if($u['id'] !== $meId): ?>
+                        <form method="POST" style="display: flex; gap: 5px; align-items: center;">
+                            <input type="hidden" name="target_user_id" value="<?php echo $u['id']; ?>">
+                            <input type="text" name="new_password_reset" id="pass_<?php echo $u['id']; ?>" placeholder="Nova senha..." style="font-size: 0.8rem; padding: 5px; width: 120px;">
+                            <button type="button" onclick="generatePass('pass_<?php echo $u['id']; ?>')" title="Gerar Senha" style="background: #eee; border: 1px solid #ccc; padding: 5px; border-radius: 4px; cursor: pointer;">
+                                <i class="ph ph-key"></i>
+                            </button>
+                            <button type="submit" name="reset_user_pass" class="btn-save" style="padding: 5px 10px; font-size: 0.75rem;">Redefinir</button>
+                        </form>
+                        <?php else: ?>
+                        <span style="color: #ccc; font-size: 0.8rem;">---</span>
+                        <?php endif; ?>
+                    </td>
+                    <?php endif; ?>
                     <td style="padding: 12px; text-align: right;">
                         <?php if($u['id'] !== $meId): ?>
                             <a href="?delete=<?php echo $u['id']; ?>" 
@@ -158,5 +192,16 @@ $users = $stmt->fetchAll();
     </table>
     </div>
 </div>
+
+<script>
+function generatePass(id) {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
+    let pass = "";
+    for (let i = 0; i < 10; i++) {
+        pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    document.getElementById(id).value = pass;
+}
+</script>
 
 <?php include('includes/footer.php'); ?>

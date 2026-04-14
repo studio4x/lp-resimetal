@@ -101,7 +101,12 @@ function uploadImage($file) {
 - Dashboard para gestão de Tags de Redes Sociais (`og:image`, `og:title`).
 - Campos de inserção de Scripts Externos (Tracking) em seções específicas da aplicação.
 
-### Design Responsivo (Mobile Admin)
+#### Gestão de Usuários e Segurança (Hierarquia)
+- **Super Admin**: O sistema identifica o usuário com username `admin` como o mestre da plataforma.
+- **Redefinição de Terceiros**: Apenas o Super Admin possui autoridade na `admin/usuarios.php` para resetar senhas de outros administradores utilizando a lógica de `UPDATE` com `password_hash`.
+- **Gerador de Chaves**: Inclusão de script JS para geração de strings aleatórias seguras (10 caracteres) para credenciais temporárias.
+
+#### Design Responsivo (Mobile Admin)
 
 O painel utiliza um layout **Off-Canvas Global** — a sidebar fica recolhida por padrão em **todos os tamanhos de tela**, liberando 100% do espaço para o conteúdo.
 
