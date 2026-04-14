@@ -118,7 +118,7 @@ $images = $stmt->fetchAll();
 <!-- SEÇÃO: IMAGENS DO SISTEMA -->
 <div class="card-admin" style="margin-bottom: 40px;">
     <h2>Imagens do Sistema (Logo e Banner)</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 20px;">
+    <div class="admin-grid-3" style="margin-top: 20px;">
         
         <!-- LOGOTIPO -->
         <div style="background: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
@@ -178,7 +178,7 @@ $images = $stmt->fetchAll();
         <strong>Dicas:</strong> Suba imagens em massa e depois defina o <strong>Alt Text</strong> de cada uma para melhorar o SEO (Google). Reorganize arrastando os cards.
     </div>
 
-    <form method="POST" enctype="multipart/form-data" style="display: flex; gap: 20px; align-items: flex-end; margin-top: 15px; margin-bottom: 30px; background: #fdfdfd; padding: 20px; border: 1px solid #f0f0f0; border-radius: 12px;">
+    <form method="POST" enctype="multipart/form-data" class="admin-grid-3" style="align-items: flex-end; margin-top: 15px; margin-bottom: 30px; background: #fdfdfd; padding: 20px; border: 1px solid #f0f0f0; border-radius: 12px;">
         <div class="form-group" style="flex: 2; margin-bottom: 0;">
             <label>Adicionar Fotos (Upload em Massa)</label>
             <input type="file" name="images[]" multiple required>
