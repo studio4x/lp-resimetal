@@ -111,3 +111,13 @@ Sempre chamar o CSS passando uma versão: `<link rel="stylesheet" href="css/styl
 - [ ] Copiar pasta `admin/` e `includes/`.
 - [ ] Mapear seções do novo site e preencher fallbacks em cada `getContent()`.
 - [ ] Registrar o primeiro usuário admin via script ou SQL seguro.
+
+---
+
+## 7. Responsividade do Admin (Mobile Friendly)
+Para garantir o controle via dispositivos móveis, a estrutura segue:
+- **Menu Off-canvas**: No mobile (< 768px), a sidebar é oculta (`left: -100%`) e ativada por um `mobile-toggle`.
+- **Overlay Dinâmico**: Uma camada de fundo (`.mobile-overlay`) permite fechar o menu ao clicar fora dele.
+- **Grids Adaptativos**: Uso de `grid-template-columns: 1fr !important` para garantir que formulários complexos não quebrem o layout horizontal.
+- **Toque Otimizado**: Padding reduzido e áreas de clique aumentadas para navegação rápida de polegar.
+

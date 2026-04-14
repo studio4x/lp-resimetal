@@ -15,7 +15,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="css/admin-style.css">
 </head>
 <body>
-    <aside class="sidebar">
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <button class="mobile-toggle" id="mobileToggle">
+        <i class="ph ph-list"></i>
+    </button>
+    
+    <aside class="sidebar" id="sidebar">
         <h3>Resimetal Admin</h3>
         <nav class="nav-admin">
             <li class="<?php echo $currentPage == 'index.php' ? 'active' : ''; ?>">
@@ -37,3 +42,25 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <a href="logout.php" class="btn-logout"><i class="ph ph-sign-out"></i> Sair</a>
     </aside>
     <main class="main-content">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileOverlay');
+
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+    }
+
+    if(overlay) {
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
+});
+</script>
