@@ -1,6 +1,14 @@
-# Blueprint Técnico: Arquitetura de CMS Dinâmico (Core)
+# Blueprint Técnico: Master Template CMS (Studio 4x)
 
-Este documento descreve a infraestrutura técnica necessária para implementar e replicar o ecossistema de gerenciamento administrativo (CMS) desenvolvido, focado em alta performance e total autonomia via painel.
+Este documento define o padrão técnico para o motor de CMS institucional da Studio 4x. O sistema foi projetado para ser **Agnóstico de Marca**, permitindo replicações rápidas através de uma base de código sólida e segura.
+
+---
+
+## 📐 0. Arquitetura de Master Template
+Toda a identidade visual e funcional da plataforma é controlada por pontos de entrada centralizados:
+- **Identidade Dinâmica**: Cores (`--primary`, `--secondary`) e nomes do projeto são definidos no `includes/config.php`.
+- **Injeção de Tema**: O frontend (`index.php`) consome as constantes do PHP e as injeta no `:root` do CSS, permitindo rebranding instantâneo.
+- **Banco de Dados Mestre**: O arquivo `database/master_schema.sql` contém a estrutura pura, pronta para novos sites sem dados residuais de projetos anteriores.
 
 ---
 

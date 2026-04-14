@@ -2,17 +2,17 @@
    VARIABLES - RESIMETAL
 ========================================= */
 :root {
-  /* Colors */
-  --bg-main: #105576; /* Azul Primário */
-  --bg-darker: #0a3a52; 
+  /* Colors - Master Template Sync (Studio 4x) */
+  --bg-main: var(--primary-color);
+  --bg-darker: color-mix(in srgb, var(--primary-color), black 20%); 
   --bg-light: #F3F4F6;
   --bg-white: #FFFFFF;
   
-  --accent-gold: #158E12; /* Verde Secundário (WhatsApp/CTA) */
-  --accent-gold-hover: #69AF44; /* Verde Claro Apoio */
+  --accent-gold: var(--secondary-color);
+  --accent-gold-hover: color-mix(in srgb, var(--secondary-color), white 20%);
   
-  --accent-blue: #105576; 
-  --accent-blue-hover: #0a3a52;
+  --accent-blue: var(--primary-color);
+  --accent-blue-hover: color-mix(in srgb, var(--primary-color), white 20%);
   
   --text-primary: #1F2937;
   --text-secondary: #4B5563;

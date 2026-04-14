@@ -39,7 +39,15 @@ $ogImg = getSetting('og_image_path', 'assets/logotipo-resimetal-transparente-oti
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($siteTitle); ?></title>
+    <title><?php echo htmlspecialchars(SITE_NAME); ?></title>
+    
+    <!-- Variáveis de Tema (Master Template) -->
+    <style>
+        :root {
+            --primary-color: <?php echo PRIMARY_COLOR; ?>;
+            --secondary-color: <?php echo SECONDARY_COLOR; ?>;
+        }
+    </style>
     
     <!-- Favicon Dinâmico -->
     <link rel="icon" type="image/x-icon" href="<?php echo $faviconPath; ?>">
