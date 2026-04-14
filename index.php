@@ -54,6 +54,10 @@ $gallery = $stmt->fetchAll();
                 <img src="assets/logotipo-resimetal-transparente-otimizado.webp" alt="Logotipo Resimetal" class="logo-img">
             </a>
             
+            <button class="mobile-menu-toggle" aria-label="Abrir menu">
+                <i class="ph ph-list"></i>
+            </button>
+
             <nav class="nav-menu">
                 <ul>
                     <li><a href="#quem-somos" class="nav-link">Quem Somos</a></li>
@@ -65,7 +69,9 @@ $gallery = $stmt->fetchAll();
                 </ul>
             </nav>
             <div class="header-cta">
-                <a href="https://wa.me/5511947132326" target="_blank" class="btn btn-primary btn-sm">Falar conosco</a>
+                <a href="https://wa.me/5511947132326" target="_blank" class="btn btn-primary btn-sm">
+                    <i class="ph-fill ph-whatsapp-logo"></i> Falar conosco
+                </a>
             </div>
         </div>
     </header>
@@ -80,6 +86,7 @@ $gallery = $stmt->fetchAll();
                     <p><?php echo getContent('hero', 'subtitle', 'Atuamos na moagem e beneficiamento de terras e borras de zinco...'); ?></p>
                     <div class="hero-actions">
                         <a href="https://wa.me/5511947132326" target="_blank" class="btn btn-primary">Solicitar Orçamento</a>
+                        <a href="#servicos" class="btn btn-outline">Conheça nossos serviços</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +99,7 @@ $gallery = $stmt->fetchAll();
                 <h2 class="section-title"><?php echo getContent('quem_somos', 'title', 'Quem Somos'); ?></h2>
                 <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 20px;"><?php echo getContent('quem_somos', 'subtitle', 'Há mais de 20 anos no mercado...'); ?></p>
                 <div style="max-width: 800px; margin: 0 auto;">
-                    <?php echo nl2br(htmlspecialchars(getContent('quem_somos', 'body', 'Somos especialistas na moagem...'))); ?>
+                    <?php echo nl2br(getContent('quem_somos', 'body', 'Somos especialistas na moagem...')); ?>
                 </div>
             </div>
         </section>
@@ -125,6 +132,54 @@ $gallery = $stmt->fetchAll();
             </div>
         </section>
 
+        <!-- Importância -->
+        <section id="importancia" class="correios section-padding bg-dark light-text">
+            <div class="container">
+                <div class="section-header reveal-up" style="text-align: center; margin-bottom: 50px;">
+                    <div class="badge">Estratégico</div>
+                    <h2 class="section-title"><?php echo getContent('importancia', 'title', 'A importância do beneficiamento desses materiais'); ?></h2>
+                    <p style="max-width: 750px; margin: 0 auto; font-size: 1.05rem;"><?php echo getContent('importancia', 'subtitle', 'A moagem e a fundição têm como objetivo adequar o produto...'); ?></p>
+                </div>
+
+                <div class="reveal-up" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                    <div class="c-feature">
+                        <i class="ph ph-checks"></i>
+                        <div>
+                            <h5>Redução de desperdícios</h5>
+                            <span>Processo fundamental para valorizar o seu resíduo e oferecer preço competitivo.</span>
+                        </div>
+                    </div>
+                    <div class="c-feature">
+                        <i class="ph ph-currency-circle-dollar"></i>
+                        <div>
+                            <h5>Valorização de Mercado</h5>
+                            <span>Materiais antes descartados passam a ter alto valor na agricultura e outros setores.</span>
+                        </div>
+                    </div>
+                    <div class="c-feature">
+                        <i class="ph ph-leaf"></i>
+                        <div>
+                            <h5>Indispensável na Agricultura</h5>
+                            <span>Essencial para a fabricação de fertilizantes e insumos.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sustentabilidade -->
+        <section id="sustentabilidade" class="section-padding">
+            <div class="container text-center">
+                <div class="badge">Meio Ambiente</div>
+                <h2 class="section-title"><?php echo getContent('sustentabilidade', 'title', 'Sustentabilidade e Compromisso Comercial'); ?></h2>
+                <p style="max-width: 750px; margin: 0 auto 20px; font-size: 1.05rem;"><?php echo getContent('sustentabilidade', 'body', 'Nosso processo segue todas as normas vigentes...'); ?></p>
+                <div class="reveal-up" style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 30px;">
+                    <div class="feature-item"><i class="ph ph-recycle"></i> <span>Economia Circular</span></div>
+                    <div class="feature-item"><i class="ph ph-shield-check"></i> <span>Normas Ambientais</span></div>
+                </div>
+            </div>
+        </section>
+
         <!-- Galeria Dinâmica -->
         <section id="galeria" class="gallery section-padding bg-light">
             <div class="container">
@@ -152,21 +207,69 @@ $gallery = $stmt->fetchAll();
             </div>
         </section>
 
+        <!-- FAQ -->
+        <section id="faq" class="faq section-padding">
+            <div class="container faq-container">
+                <div class="faq-content reveal-up text-center">
+                    <h2 class="section-title">Dúvidas Frequentes</h2>
+                </div>
+                <div class="faq-accordion reveal-up">
+                    <div class="accordion-item">
+                        <button class="accordion-header">Quais tipos de resíduos vocês processam? <i class="ph ph-caret-down"></i></button>
+                        <div class="accordion-content"><p>Processamos principalmente terras e borras de zinco provenientes de galvanização.</p></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">Onde a Resimetal está localizada? <i class="ph ph-caret-down"></i></button>
+                        <div class="accordion-content"><p>Estamos em Mogi das Cruzes - SP, no bairro Taboão. Estrada Eng. Abilio Gondim Pereira, 480.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contato -->
-        <section id="contato" class="contact section-padding">
-            <div class="container text-center">
-                <h2 class="section-title">Entre em contato</h2>
-                <p>Telefone: <strong>(11) 94713-2326</strong></p>
-                <div style="margin-top: 30px;">
-                    <a href="https://wa.me/5511947132326" class="btn btn-primary">Falar no WhatsApp</a>
+        <section id="contato" class="contact section-padding bg-light">
+            <div class="container">
+                <div class="section-header reveal-up" style="text-align:center;">
+                    <h2 class="section-title">Entre em contato</h2>
+                    <p class="section-subtitle">Estamos prontos para atender as necessidades da sua empresa.</p>
+                </div>
+                <div class="row" style="justify-content: center; gap: 40px; margin-top: 40px;">
+                    <ul class="contact-info">
+                        <li><i class="ph-fill ph-phone text-primary"></i> <div><span>Telefone</span><strong>(11) 94713-2326</strong></div></li>
+                        <li><i class="ph-fill ph-envelope-simple text-primary"></i> <div><span>E-mail</span><strong>comercial@resimetalbeneficiamentos.com.br</strong></div></li>
+                    </ul>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="footer">
-        <div class="container text-center" style="color: white; padding: 20px 0;">
-            <p>&copy; <?php echo date('Y'); ?> Resimetal. Todos os direitos reservados.</p>
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="assets/logotipo-resimetal-transparente-otimizado.webp" alt="Resimetal" class="footer-logo-img">
+                <p>Referência em processos de zinco há mais de 20 anos.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="#quem-somos">Quem Somos</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Atendimento</h4>
+                <ul>
+                    <li><i class="ph-fill ph-phone"></i> (11) 94713-2326</li>
+                    <li><i class="ph-fill ph-whatsapp-logo"></i> (11) 94713-2326</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; <?php echo date('Y'); ?> Resimetal. Todos os direitos reservados.</p>
+            </div>
         </div>
     </footer>
 

@@ -71,6 +71,38 @@ function getVal($section, $key) {
     </form>
 </div>
 
+<div class="card-admin" style="margin-bottom: 30px;">
+    <h2>Seção Importância (Estratégico)</h2>
+    <form method="POST">
+        <input type="hidden" name="section" value="importancia">
+        <div class="form-group">
+            <label>Título da Seção</label>
+            <input type="text" name="content[title]" value="<?php echo htmlspecialchars(getVal('importancia', 'title')); ?>">
+        </div>
+        <div class="form-group">
+            <label>Subtítulo / Descrição</label>
+            <textarea name="content[subtitle]" rows="3"><?php echo htmlspecialchars(getVal('importancia', 'subtitle')); ?></textarea>
+        </div>
+        <button type="submit" name="save_content" class="btn-save">Salvar Alterações</button>
+    </form>
+</div>
+
+<div class="card-admin" style="margin-bottom: 30px;">
+    <h2>Seção Sustentabilidade (Meio Ambiente)</h2>
+    <form method="POST">
+        <input type="hidden" name="section" value="sustentabilidade">
+        <div class="form-group">
+            <label>Título da Seção</label>
+            <input type="text" name="content[title]" value="<?php echo htmlspecialchars(getVal('sustentabilidade', 'title')); ?>">
+        </div>
+        <div class="form-group">
+            <label>Texto Principal</label>
+            <textarea name="content[body]" rows="4"><?php echo htmlspecialchars(getVal('sustentabilidade', 'body')); ?></textarea>
+        </div>
+        <button type="submit" name="save_content" class="btn-save">Salvar Alterações</button>
+    </form>
+</div>
+
 <div class="card-admin">
     <h2>Seção Nossos Serviços (Cabeçalho)</h2>
     <form method="POST">
