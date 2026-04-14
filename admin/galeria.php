@@ -78,15 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_alt'])) {
     }
 }
 
-// 4. Processar Exclusão da Galeria
-if (isset($_GET['delete'])) {
-    $id = (int)$_GET['delete'];
+// 4. Processar Exclusão da Galeria (Via POST Seguro)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_image'])) {
+    $id = (int)$_POST['id_del'];
     $stmt = $conn->prepare("SELECT image_path FROM gallery_images WHERE id = ?");
     $stmt->execute([$id]);
     $img = $stmt->fetch();
     if ($img) {
         $fullPath = "../" . $img['image_path'];
-        if (file_exists($fullPath) && strpos($img['image_path'], 'uploads/') !== false) unlink($fullPath);
+        // Proteção contra exclusão fora da pasta uploads
+        if (file_exists($fullPath) && strpos($img['image_path'], 'uploads/') !== false) {
+            unlink($fullPath);
+        }
         $stmt = $conn->prepare("DELETE FROM gallery_images WHERE id = ?");
         $stmt->execute([$id]);
         $msg = "Imagem removida da galeria.";
@@ -222,12 +225,13 @@ $images = $stmt->fetchAll();
                     </form>
                 </div>
 
-                <!-- Botão Deletar -->
-                <a href="?delete=<?php echo $img['id']; ?>" 
-                   onclick="return confirm('Excluir esta foto da galeria?')"
-                   style="position: absolute; top: 110px; right: 10px; background: rgba(220, 38, 38, 0.9); color: white; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; z-index: 10; border: 2px solid #fff;">
-                    <i class="ph ph-trash" style="font-size: 0.9rem;"></i>
-                </a>
+                <!-- Botão Deletar (POST Seguro) -->
+                <form method="POST" onsubmit="return confirm('Excluir esta foto da galeria?')" style="position: absolute; top: 110px; right: 10px; z-index: 10;">
+                    <input type="hidden" name="id_del" value="<?php echo $img['id']; ?>">
+                    <button type="submit" name="delete_image" style="background: rgba(220, 38, 38, 0.9); color: white; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid #fff; cursor: pointer;">
+                        <i class="ph ph-trash" style="font-size: 0.9rem;"></i>
+                    </button>
+                </form>
             </div>
         <?php endforeach; ?>
     </div>

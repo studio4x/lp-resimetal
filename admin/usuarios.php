@@ -51,6 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_pass'])) {
     }
 }
 
+// 3. Processar Exclusão de Usuário (Via POST Seguro)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_user'])) {
+    $idDel = (int)$_POST['id_del'];
+    if ($idDel === $meId) {
+        $error = "Você não pode excluir a si mesmo.";
+    } else {
+        $stmt = $conn->prepare("DELETE FROM admin_users WHERE id = ?");
+        $stmt->execute([$idDel]);
+        $msg = "Usuário removido com sucesso!";
+    }
+}
+
 // 4. Processar Redefinição de Senha por Super Admin
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_user_pass'])) {
     // Verificar se quem está logado é o 'admin'
@@ -179,11 +191,12 @@ $isSuperAdmin = ($stmt->fetch()['username'] === 'admin');
                     <?php endif; ?>
                     <td style="padding: 12px; text-align: right;">
                         <?php if($u['id'] !== $meId): ?>
-                            <a href="?delete=<?php echo $u['id']; ?>" 
-                               onclick="return confirm('Tem certeza que deseja remover este administrador?')"
-                               style="color: #ef4444; text-decoration: none; font-size: 1.2rem;">
-                                <i class="ph ph-trash"></i>
-                            </a>
+                            <form method="POST" onsubmit="return confirm('Tem certeza que deseja remover este administrador?')" style="display:inline;">
+                                <input type="hidden" name="id_del" value="<?php echo $u['id']; ?>">
+                                <button type="submit" name="delete_user" style="background:none; border:none; color: #ef4444; cursor:pointer; font-size: 1.2rem; padding:0;">
+                                    <i class="ph ph-trash"></i>
+                                </button>
+                            </form>
                         <?php endif; ?>
                     </td>
                 </tr>
