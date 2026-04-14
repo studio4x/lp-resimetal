@@ -109,12 +109,12 @@ $gallery = $stmt->fetchAll();
 
         <!-- Quem Somos -->
         <section id="quem-somos" class="section-padding bg-light">
-            <div class="container text-center">
+            <div class="container text-center" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                 <div class="badge">Institucional</div>
                 <h2 class="section-title"><?php echo getContent('quem_somos', 'title', 'Quem Somos'); ?></h2>
-                <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 20px;"><?php echo getContent('quem_somos', 'subtitle', 'Há mais de 20 anos no mercado...'); ?></p>
+                <p class="section-subtitle" style="margin: 0 auto 20px auto; max-width: 800px;"><?php echo getContent('quem_somos', 'subtitle', 'Há mais de 20 anos no mercado, a Resimetal é referência no beneficiamento de zinco.'); ?></p>
                 <div style="max-width: 800px; margin: 0 auto;">
-                    <?php echo nl2br(getContent('quem_somos', 'body', 'Somos especialistas na moagem...')); ?>
+                    <p>Somos especialistas na moagem, peneiramento e fundição de resíduos de zinco, como terras e borras geradas da galvanização a fogo. Nossa trajetória é marcada pela eficiência, transparência e pela parceria duradoura com nossos clientes.</p>
                 </div>
             </div>
         </section>
@@ -124,24 +124,30 @@ $gallery = $stmt->fetchAll();
             <div class="container">
                 <div class="section-header reveal-up">
                     <h2 class="section-title"><?php echo getContent('servicos', 'title', 'Nossos Serviços'); ?></h2>
-                    <p class="section-subtitle"><?php echo getContent('servicos', 'subtitle', 'Soluções completas...'); ?></p>
+                    <p class="section-subtitle"><?php echo getContent('servicos', 'subtitle', 'Soluções completas para o reaproveitamento de materiais gerados na indústria.'); ?></p>
                 </div>
 
                 <div class="materials-grid">
                     <div class="benefit-card reveal-up">
-                        <div class="icon-wrapper"><i class="ph ph-magnifying-glass"></i></div>
+                        <div class="icon-wrapper">
+                            <i class="ph ph-magnifying-glass"></i>
+                        </div>
                         <h3>Avaliação Técnica</h3>
-                        <p>Nossa equipe especializada define a melhor rota de processamento.</p>
+                        <p>Nossa equipe especializada, após avaliação e testes, define a melhor rota de processamento para cada material.</p>
                     </div>
-                    <div class="benefit-card reveal-up">
-                        <div class="icon-wrapper"><i class="ph ph-selection-all"></i></div>
+                    <div class="benefit-card reveal-up" style="--delay: 0.1s">
+                        <div class="icon-wrapper">
+                            <i class="ph ph-selection-all"></i>
+                        </div>
                         <h3>Moagem e Peneiramento</h3>
-                        <p>Processo de separação mecânica das terras e pingos.</p>
+                        <p>Nessa etapa, realizamos o processo de separação mecânica das terras e pingos por meio dos nossos moinhos e peneiras.</p>
                     </div>
-                    <div class="benefit-card reveal-up">
-                        <div class="icon-wrapper"><i class="ph ph-fire"></i></div>
+                    <div class="benefit-card reveal-up" style="--delay: 0.2s">
+                        <div class="icon-wrapper">
+                            <i class="ph ph-fire"></i>
+                        </div>
                         <h3>Fundição</h3>
-                        <p>Transformação dos pingos em lingotes de zinco.</p>
+                        <p>Em seguida, realizamos a fundição desses pingos, transformando-os em lingotes de zinco, produto pronto para as mais diversas aplicações no mercado.</p>
                     </div>
                 </div>
             </div>
