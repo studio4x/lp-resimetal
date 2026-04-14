@@ -84,4 +84,23 @@ function uploadImage($file, $targetDir = "../assets/uploads/") {
     }
     return false;
 }
+
+// Função para validar login
+function login($username, $password) {
+    global $conn;
+    try {
+        $stmt = $conn->prepare("SELECT id, password_hash FROM admin_users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+        
+        if ($user && password_verify($password, $user['password_hash'])) {
+            if (session_status() === PHP_SESSION_NONE) session_start();
+            $_SESSION[ADMIN_SESSION_NAME] = $user['id'];
+            return true;
+        }
+    } catch(Exception $e) {
+        return false;
+    }
+    return false;
+}
 ?>

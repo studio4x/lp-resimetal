@@ -11,7 +11,7 @@ $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 try {
     // Tenta atualizar a senha para o hash correto
-    $stmt = $conn->prepare("UPDATE admin_users SET password = ? WHERE username = ?");
+    $stmt = $conn->prepare("UPDATE admin_users SET password_hash = ? WHERE username = ?");
     $stmt->execute([$hashed_password, $username]);
 
     if ($stmt->rowCount() > 0) {
@@ -21,7 +21,7 @@ try {
         echo "<p><strong>Senha:</strong> admin123</p>";
     } else {
         // Se não houver o usuário 'admin', vamos criá-lo
-        $stmt = $conn->prepare("INSERT INTO admin_users (username, password) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO admin_users (username, password_hash) VALUES (?, ?)");
         $stmt->execute([$username, $hashed_password]);
         echo "<h2>Usuário 'admin' não existia e foi criado com a senha 'admin123'!</h2>";
         echo "<p>Tente entrar em: <a href='admin/login.php'>resimetalbeneficiamentos.com.br/admin</a></p>";

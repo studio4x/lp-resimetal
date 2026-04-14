@@ -16,12 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $_POST['username'];
     $pass = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, password_hash FROM admin_users WHERE username = ?");
-    $stmt->execute([$user]);
-    $admin = $stmt->fetch();
-
-    if ($admin && password_verify($pass, $admin['password_hash'])) {
-        $_SESSION[ADMIN_SESSION_NAME] = $admin['id'];
+    if (login($user, $pass)) {
         header("Location: index.php");
         exit();
     } else {
