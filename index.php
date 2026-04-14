@@ -207,6 +207,7 @@ $gallery = $stmt->fetchAll();
                 <div class="section-header reveal-up">
                     <div class="badge">Galeria</div>
                     <h2 class="section-title">Nossa Operação</h2>
+                    <p class="section-subtitle">Confira fotos reais do nosso processo de beneficiamento e dos materiais processados.</p>
                 </div>
 
                 <div class="carousel-container reveal-up">
