@@ -41,7 +41,7 @@ function getVal($section, $key) {
     <h2>1. Geral, Contatos e Header</h2>
     <form method="POST">
         <input type="hidden" name="section" value="global">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="admin-grid-field">
             <div class="form-group">
                 <label>WhatsApp Oficial (Número com DDD)</label>
                 <input type="text" name="content[whatsapp_text]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_text')); ?>" placeholder="Ex: (11) 94713-2326">
@@ -81,7 +81,7 @@ function getVal($section, $key) {
             <label>Subtítulo</label>
             <textarea name="content[subtitle]" rows="2"><?php echo htmlspecialchars(getVal('hero', 'subtitle')); ?></textarea>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="admin-grid-field">
             <div class="form-group">
                 <label>Botão Principal (Texto)</label>
                 <input type="text" name="content[btn_primary]" value="<?php echo htmlspecialchars(getVal('hero', 'btn_primary')); ?>">
@@ -253,7 +253,7 @@ function getVal($section, $key) {
     <h2>6. Seção Sustentabilidade</h2>
     <form method="POST">
         <input type="hidden" name="section" value="sustentabilidade">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="admin-grid-field">
             <div class="form-group">
                 <label>Badge Superior</label>
                 <input type="text" name="content[badge]" value="<?php echo htmlspecialchars(getVal('sustentabilidade', 'badge')); ?>">
@@ -271,7 +271,7 @@ function getVal($section, $key) {
             <label>Corpo do Texto</label>
             <textarea name="content[body]" rows="4"><?php echo htmlspecialchars(getVal('sustentabilidade', 'body')); ?></textarea>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="admin-grid-field">
              <div class="form-group">
                 <label>Pilar 1 (Texto)</label>
                 <input type="text" name="content[pilar1]" value="<?php echo htmlspecialchars(getVal('sustentabilidade', 'pilar1')); ?>">
@@ -352,7 +352,7 @@ function getVal($section, $key) {
     <h2>9. Rodapé & Contato Detalhado</h2>
     <form method="POST">
         <input type="hidden" name="section" value="contato">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="admin-grid-field">
             <div class="form-group">
                 <label>Título da Seção Contato</label>
                 <input type="text" name="content[title]" value="<?php echo htmlspecialchars(getVal('contato', 'title')); ?>">

@@ -77,7 +77,7 @@ function getSett($name, $default = "") {
             <small style="color: #6B7280;">O resumo que aparece abaixo do título no Google. Ideal: entre 150 e 160 caracteres.</small>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="admin-grid-field">
             <div class="form-group">
                 <label>Palavras-Chave (Keywords)</label>
                 <input type="text" name="settings[site_keywords]" value="<?php echo htmlspecialchars(getSett('site_keywords')); ?>" placeholder="zinco, moagem, resíduos industriais">

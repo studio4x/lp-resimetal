@@ -84,7 +84,7 @@ $users = $stmt->fetchAll();
     </div>
 <?php endif; ?>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+<div class="admin-grid-field">
     <!-- Alterar Senha Própria -->
     <div class="card-admin">
         <h2>Alterar Minha Senha</h2>
