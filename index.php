@@ -330,13 +330,15 @@ $gallery = $stmt->fetchAll();
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="assets/logotipo-resimetal-transparente-otimizado.webp" alt="Resimetal" class="footer-logo-img">
-                <p>Referência em processos de zinco há mais de 20 anos.</p>
+                <p>Referência em processos de moagem, peneiramento e fundição de resíduos de zinco há mais de 20 anos.</p>
             </div>
             <div class="footer-links">
                 <h4>Navegação</h4>
                 <ul>
                     <li><a href="#quem-somos">Quem Somos</a></li>
                     <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#importancia">Importância</a></li>
+                    <li><a href="#sustentabilidade">Sustentabilidade</a></li>
                     <li><a href="#galeria">Galeria</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
