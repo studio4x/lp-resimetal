@@ -22,5 +22,5 @@ try {
 // Configurações de Segurança e URL
 define('ADMIN_SESSION_NAME', 'resimetal_admin_session');
 define('BASE_URL', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/");
-define('BUILD_VERSION', '1.2.5');
+define('BUILD_VERSION', '1.3.0');
 ?>

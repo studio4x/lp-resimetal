@@ -2,6 +2,22 @@
 require_once('../includes/config.php');
 require_once('../includes/functions.php');
 checkAuth();
+
+// Headers de Segurança HTTP
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+
+// Validação CSRF global para todos os POST no admin
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
+        die('<div style="text-align:center;margin-top:50px;font-family:sans-serif;">
+            <h2 style="color:#b91c1c;">⚠️ Requisição Inválida</h2>
+            <p>Token de segurança expirado. <a href="javascript:history.back()">Voltar</a></p></div>');
+    }
+}
+
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -62,5 +78,18 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.classList.remove('active');
         });
     }
+
+    // Injetar CSRF Token em TODOS os formulários POST automaticamente
+    const csrfToken = '<?php echo generateCsrfToken(); ?>';
+    document.querySelectorAll('form[method="POST"], form[method="post"]').forEach(function(form) {
+        if (!form.querySelector('input[name="csrf_token"]')) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'csrf_token';
+            input.value = csrfToken;
+            form.appendChild(input);
+        }
+    });
 });
 </script>
+

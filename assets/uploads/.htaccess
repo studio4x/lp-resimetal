@@ -1,0 +1,14 @@
+# Desabilitar execução de PHP no diretório de uploads
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+# Bloquear extensões perigosas
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|cgi|py|sh|bash)$">
+    Require all denied
+</FilesMatch>
+
+# Permitir apenas imagens
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|ico|svg)$">
+    Require all granted
+</FilesMatch>
