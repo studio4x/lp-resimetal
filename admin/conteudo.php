@@ -43,12 +43,9 @@ function getVal($section, $key) {
         <input type="hidden" name="section" value="global">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group">
-                <label>WhatsApp (Exibição: (11) 94713-2326)</label>
-                <input type="text" name="content[whatsapp_text]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_text')); ?>">
-            </div>
-            <div class="form-group">
-                <label>WhatsApp Link (Apenas números: 5511947132326)</label>
-                <input type="text" name="content[whatsapp_link]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_link')); ?>">
+                <label>WhatsApp Oficial (Número com DDD)</label>
+                <input type="text" name="content[whatsapp_text]" value="<?php echo htmlspecialchars(getVal('global', 'whatsapp_text')); ?>" placeholder="Ex: (11) 94713-2326">
+                <small style="color: #6B7280;">Este número será usado tanto para exibição quanto para o link do botão flutuante.</small>
             </div>
             <div class="form-group">
                 <label>Mensagem Pré-definida (Botão Flutuante)</label>

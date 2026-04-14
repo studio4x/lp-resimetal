@@ -9,11 +9,12 @@ logVisitor();
 $stmt = $conn->query("SELECT * FROM gallery_images ORDER BY sort_order ASC, id DESC");
 $gallery = $stmt->fetchAll();
 
-// Cache de conteúdos comuns
 $whatsappText = getContent('global', 'whatsapp_text', '(11) 94713-2326');
-$whatsappNum = getContent('global', 'whatsapp_link', '5511947132326');
 $whatsappMsg = getContent('global', 'whatsapp_float_msg', 'Olá! Gostaria de um orçamento.');
-$whatsappLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $whatsappNum) . "?text=" . urlencode($whatsappMsg);
+$whatsappClean = preg_replace('/[^0-9]/', '', $whatsappText);
+// Se o número não começar com 55 (Brasil), adicionamos automaticamente
+if(strlen($whatsappClean) <= 11) $whatsappClean = "55" . $whatsappClean;
+$whatsappLink = "https://wa.me/" . $whatsappClean . "?text=" . urlencode($whatsappMsg);
 $emailInfo = getContent('global', 'email', 'comercial@resimetalbeneficiamentos.com.br');
 
 // Imagens do Sistema
