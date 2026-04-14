@@ -37,14 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
         $countSuccess = 0;
         $countError = 0;
 
-        // Buscar a última ordem para começar a sequência
         $stmt = $conn->query("SELECT MAX(sort_order) as max_order FROM gallery_images");
         $max = $stmt->fetch();
         $nextOrder = ($max['max_order'] ?? 0) + 1;
 
-        // Percorrer cada arquivo enviado
         for ($i = 0; $i < count($files['name']); $i++) {
-            // Criar array simulado para a função uploadImage
             $currentFile = [
                 'name' => $files['name'][$i],
                 'type' => $files['type'][$i],
@@ -55,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
 
             $path = uploadImage($currentFile);
             if ($path) {
-                $caption = $_POST['caption'] ?? "";
+                // Ao subir em massa, podemos deixar o Alt Text vazio ou usar um padrão
+                $caption = $_POST['caption'] ?? ""; 
                 $stmt = $conn->prepare("INSERT INTO gallery_images (image_path, caption, sort_order) VALUES (?, ?, ?)");
                 $stmt->execute([$path, $caption, $nextOrder]);
                 $nextOrder++;
@@ -64,19 +62,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
                 $countError++;
             }
         }
-
-        if ($countSuccess > 0) {
-            $msg = "$countSuccess imagens adicionadas com sucesso!";
-        }
-        if ($countError > 0) {
-            $error = "Ocorreu um erro em $countError arquivos.";
-        }
-    } else {
-        $error = "Por favor, selecione ao menos uma imagem.";
+        if ($countSuccess > 0) $msg = "$countSuccess imagens adicionadas!";
     }
 }
 
-// 3. Processar Exclusão da Galeria
+// 3. Processar Atualização de Alt Text (Novo!)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_alt'])) {
+    $id = (int)$_POST['image_id'];
+    $newAlt = $_POST['alt_text'];
+    $stmt = $conn->prepare("UPDATE gallery_images SET caption = ? WHERE id = ?");
+    if ($stmt->execute([$newAlt, $id])) {
+        $msg = "Texto Alternativo (Alt) atualizado!";
+    } else {
+        $error = "Erro ao atualizar texto alternativo.";
+    }
+}
+
+// 4. Processar Exclusão da Galeria
 if (isset($_GET['delete'])) {
     $id = (int)$_GET['delete'];
     $stmt = $conn->prepare("SELECT image_path FROM gallery_images WHERE id = ?");
@@ -173,32 +175,58 @@ $images = $stmt->fetchAll();
     
     <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem; color: #1e40af;">
         <i class="ph ph-info" style="font-size: 1.1rem; vertical-align: middle;"></i> 
-        <strong>Dicas:</strong> Selecione múltiplas imagens para subir de uma vez. Clique e arraste para organizar a ordem.
+        <strong>Dicas:</strong> Suba imagens em massa e depois defina o <strong>Alt Text</strong> de cada uma para melhorar o SEO (Google). Reorganize arrastando os cards.
     </div>
 
-    <form method="POST" enctype="multipart/form-data" style="display: flex; gap: 20px; align-items: flex-end; margin-top: 15px;">
+    <form method="POST" enctype="multipart/form-data" style="display: flex; gap: 20px; align-items: flex-end; margin-top: 15px; margin-bottom: 30px; background: #fdfdfd; padding: 20px; border: 1px solid #f0f0f0; border-radius: 12px;">
         <div class="form-group" style="flex: 2; margin-bottom: 0;">
             <label>Adicionar Fotos (Upload em Massa)</label>
             <input type="file" name="images[]" multiple required>
         </div>
         <div class="form-group" style="flex: 2; margin-bottom: 0;">
-            <label>Legenda Padrão</label>
-            <input type="text" name="caption" placeholder="Opcional">
+            <label>Texto Alt / Legenda Base</label>
+            <input type="text" name="caption" placeholder="Ex: Operação Resimetal">
         </div>
-        <button type="submit" name="upload_gallery" class="btn-save">Fazer Upload</button>
+        <button type="submit" name="upload_gallery" class="btn-save" style="background: #158E12;">Fazer Upload</button>
     </form>
 
-    <div id="sortable-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; margin-top: 30px;">
-        <?php foreach($images as $img): ?>
-            <div data-id="<?php echo $img['id']; ?>" class="gallery-item-sortable" style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fafafa; position: relative; cursor: grab;">
-                <img src="../<?php echo $img['image_path']; ?>" style="width: 100%; height: 120px; object-fit: cover; pointer-events: none;">
-                <div style="padding: 10px; font-size: 0.75rem; color: #666; height: 40px; overflow: hidden; pointer-events: none;">
-                    <?php echo htmlspecialchars($img['caption']); ?>
+    <div id="sortable-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-top: 10px;">
+        <?php foreach($images as $img): 
+            // Limpar o nome do arquivo para exibição (remove o timestamp prefixado)
+            $filename = basename($img['image_path']);
+            $displayName = (strpos($filename, '_') !== false) ? substr($filename, strpos($filename, '_') + 1) : $filename;
+        ?>
+            <div data-id="<?php echo $img['id']; ?>" class="gallery-item-sortable" style="border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); position: relative; border-bottom: 3px solid #eee;">
+                
+                <div style="background: #f8fafc; padding: 8px 12px; font-size: 0.7rem; color: #64748b; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 5px;">
+                   <i class="ph ph-image"></i> <?php echo htmlspecialchars($displayName); ?>
                 </div>
+
+                <div style="cursor: grab;">
+                    <img src="../<?php echo $img['image_path']; ?>" style="width: 100%; height: 140px; object-fit: cover; pointer-events: none;">
+                </div>
+
+                <div style="padding: 12px; background: #fff;">
+                    <form method="POST" style="display: flex; flex-direction: column; gap: 8px;">
+                        <input type="hidden" name="image_id" value="<?php echo $img['id']; ?>">
+                        <label style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Alt Text / Legenda</label>
+                        <div style="display: flex; gap: 5px;">
+                            <input type="text" name="alt_text" value="<?php echo htmlspecialchars($img['caption']); ?>" 
+                                   style="flex: 1; font-size: 0.8rem; padding: 5px 8px; border: 1px solid #e2e8f0; border-radius: 6px;" 
+                                   placeholder="Descreva a foto...">
+                            <button type="submit" name="update_alt" title="Salvar Legenda" 
+                                    style="background: #3b82f6; color: white; border: none; padding: 5px 8px; border-radius: 6px; cursor: pointer;">
+                                <i class="ph ph-floppy-disk"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Botão Deletar -->
                 <a href="?delete=<?php echo $img['id']; ?>" 
                    onclick="return confirm('Excluir esta foto da galeria?')"
-                   style="position: absolute; top: 5px; right: 5px; background: rgba(220, 38, 38, 0.8); color: white; padding: 4px; border-radius: 4px; text-decoration: none; z-index: 10;">
-                    <i class="ph ph-trash"></i>
+                   style="position: absolute; top: 110px; right: 10px; background: rgba(220, 38, 38, 0.9); color: white; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; z-index: 10; border: 2px solid #fff;">
+                    <i class="ph ph-trash" style="font-size: 0.9rem;"></i>
                 </a>
             </div>
         <?php endforeach; ?>
@@ -213,27 +241,21 @@ document.addEventListener('DOMContentLoaded', function() {
         Sortable.create(el, {
             animation: 150,
             ghostClass: 'sortable-ghost',
+            handle: '[style*="cursor: grab"]', // Arrastar apenas pela imagem
             onEnd: function() {
                 const order = [];
                 document.querySelectorAll('.gallery-item-sortable').forEach((item) => {
                     order.push(item.getAttribute('data-id'));
                 });
 
-                // Enviar para a API
                 fetch('api_update_order.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ order: order })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        console.log('Ordem salva com sucesso!');
-                    } else {
-                        alert('Erro ao salvar a ordem: ' + data.error);
-                    }
+                    if (!data.success) alert('Erro ao salvar a ordem: ' + data.error);
                 });
             }
         });
@@ -242,13 +264,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-.sortable-ghost {
-    opacity: 0.4;
-    background: #e5e7eb !important;
-}
-.gallery-item-sortable:active {
-    cursor: grabbing;
-}
+.sortable-ghost { opacity: 0.4; border: 2px dashed #3b82f6 !important; }
+.btn-save:hover { filter: brightness(1.1); }
+input:focus { outline: none; border-color: #3b82f6 !important; box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1); }
 </style>
 
 <?php include('includes/footer.php'); ?>
