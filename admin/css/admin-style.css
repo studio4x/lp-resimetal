@@ -109,11 +109,8 @@ body {
 .btn-save:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
 /* Grid System */
-.admin-grid-field {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+.admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.admin-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
 /* Mobile & Tablet - Forçar Coluna Única */
 @media (max-width: 1024px) {
@@ -131,6 +128,8 @@ body {
 
     /* Forçar 1 coluna em QUALQUER grid ou flex do admin */
     .admin-grid-field, 
+    .admin-grid-2,
+    .admin-grid-3,
     .metrics-grid,
     div[style*="display: grid"],
     div[style*="display: flex"]:not(.nav-admin a) { 
