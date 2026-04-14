@@ -114,32 +114,9 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
-@media (max-width: 768px) {
-    .admin-grid-field { grid-template-columns: 1fr !important; gap: 15px; }
-}
 
-/* Mobile Controls */
-.mobile-toggle {
-    display: none;
-    position: fixed; top: 15px; left: 15px;
-    background: var(--primary); color: white;
-    border: none; width: 45px; height: 45px;
-    border-radius: 8px; font-size: 24px;
-    z-index: 1001; cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.mobile-overlay {
-    display: none;
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 999;
-}
-
-@media (max-width: 768px) {
-    .mobile-toggle { display: flex; align-items: center; justify-content: center; }
-    
-    .mobile-overlay.active { display: block; }
-
+/* Mobile & Tablet - Forçar Coluna Única */
+@media (max-width: 1024px) {
     .sidebar {
         left: -100%;
         width: 280px;
@@ -147,34 +124,27 @@ body {
         transition: 0.3s ease;
         box-shadow: 5px 0 15px rgba(0,0,0,0.1);
     }
-    
     .sidebar.active { left: 0; }
+    .main-content { margin-left: 0; padding: 80px 15px 40px; }
+    .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+    .mobile-overlay.active { display: block; }
 
-    .main-content {
-        margin-left: 0;
-        padding: 80px 15px 40px;
-    }
-
-    .header-page { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .header-page h1 { font-size: 1.5rem; }
-
-    .card-admin { padding: 20px 15px; }
-
-    /* Forçar colunas únicas no mobile */
-    div[style*="grid-template-columns"], 
-    div[style*="display: grid"] {
-        grid-template-columns: 1fr !important;
+    /* Forçar 1 coluna em QUALQUER grid ou flex do admin */
+    .admin-grid-field, 
+    .metrics-grid,
+    div[style*="display: grid"],
+    div[style*="display: flex"]:not(.nav-admin a) { 
+        grid-template-columns: 1fr !important; 
+        flex-direction: column !important;
+        gap: 15px !important; 
     }
     
-    form div[style*="display: grid"] {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-    }
+    .card-admin { padding: 20px 15px; }
+    .header-page { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
 
-    /* Galeria Mobile */
-    #gallery-container {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
-    }
+@media (min-width: 1025px) {
+    /* ... (Estilos Desktop) */
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
