@@ -23,30 +23,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_system_image'])) 
                                     VALUES ('images', ?, ?) 
                                     ON DUPLICATE KEY UPDATE content_value = ?");
             $stmt->execute([$key, $path, $path]);
-            $msg = "Imagem do sistema atualizada com sucesso!";
+            $msg = "Ativo do sistema atualizado!";
         } else {
             $error = "Erro no upload da imagem do sistema.";
         }
     }
 }
 
-// 2. Processar Galeria (Carrossel)
+// 2. Processar Galeria (Upload em Massa)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
-    if (!empty($_FILES['image']['name'])) {
-        $path = uploadImage($_FILES['image']);
-        if ($path) {
-            $caption = $_POST['caption'] ?? "";
-            // Buscar a última ordem para inserir no fim
-            $stmt = $conn->query("SELECT MAX(sort_order) as max_order FROM gallery_images");
-            $max = $stmt->fetch();
-            $newOrder = ($max['max_order'] ?? 0) + 1;
+    if (!empty($_FILES['images']['name'][0])) {
+        $files = $_FILES['images'];
+        $countSuccess = 0;
+        $countError = 0;
 
-            $stmt = $conn->prepare("INSERT INTO gallery_images (image_path, caption, sort_order) VALUES (?, ?, ?)");
-            $stmt->execute([$path, $caption, $newOrder]);
-            $msg = "Imagem adicionada à galeria!";
-        } else {
-            $error = "Erro no upload para a galeria.";
+        // Buscar a última ordem para começar a sequência
+        $stmt = $conn->query("SELECT MAX(sort_order) as max_order FROM gallery_images");
+        $max = $stmt->fetch();
+        $nextOrder = ($max['max_order'] ?? 0) + 1;
+
+        // Percorrer cada arquivo enviado
+        for ($i = 0; $i < count($files['name']); $i++) {
+            // Criar array simulado para a função uploadImage
+            $currentFile = [
+                'name' => $files['name'][$i],
+                'type' => $files['type'][$i],
+                'tmp_name' => $files['tmp_name'][$i],
+                'error' => $files['error'][$i],
+                'size' => $files['size'][$i]
+            ];
+
+            $path = uploadImage($currentFile);
+            if ($path) {
+                $caption = $_POST['caption'] ?? "";
+                $stmt = $conn->prepare("INSERT INTO gallery_images (image_path, caption, sort_order) VALUES (?, ?, ?)");
+                $stmt->execute([$path, $caption, $nextOrder]);
+                $nextOrder++;
+                $countSuccess++;
+            } else {
+                $countError++;
+            }
         }
+
+        if ($countSuccess > 0) {
+            $msg = "$countSuccess imagens adicionadas com sucesso!";
+        }
+        if ($countError > 0) {
+            $error = "Ocorreu um erro em $countError arquivos.";
+        }
+    } else {
+        $error = "Por favor, selecione ao menos uma imagem.";
     }
 }
 
@@ -147,16 +173,16 @@ $images = $stmt->fetchAll();
     
     <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem; color: #1e40af;">
         <i class="ph ph-info" style="font-size: 1.1rem; vertical-align: middle;"></i> 
-        <strong>Ordenação:</strong> Clique e arraste as imagens abaixo para reorganizar a ordem de exibição no site. A alteração é salva automaticamente.
+        <strong>Dicas:</strong> Selecione múltiplas imagens para subir de uma vez. Clique e arraste para organizar a ordem.
     </div>
 
     <form method="POST" enctype="multipart/form-data" style="display: flex; gap: 20px; align-items: flex-end; margin-top: 15px;">
         <div class="form-group" style="flex: 2; margin-bottom: 0;">
-            <label>Adicionar Foto à Galeria</label>
-            <input type="file" name="image" required>
+            <label>Adicionar Fotos (Upload em Massa)</label>
+            <input type="file" name="images[]" multiple required>
         </div>
         <div class="form-group" style="flex: 2; margin-bottom: 0;">
-            <label>Legenda</label>
+            <label>Legenda Padrão</label>
             <input type="text" name="caption" placeholder="Opcional">
         </div>
         <button type="submit" name="upload_gallery" class="btn-save">Fazer Upload</button>
