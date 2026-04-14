@@ -244,15 +244,65 @@ $gallery = $stmt->fetchAll();
         <!-- Contato -->
         <section id="contato" class="contact section-padding bg-light">
             <div class="container">
-                <div class="section-header reveal-up" style="text-align:center;">
+                <div class="section-header reveal-up">
                     <h2 class="section-title">Entre em contato</h2>
                     <p class="section-subtitle">Estamos prontos para atender as necessidades da sua empresa.</p>
                 </div>
-                <div class="row" style="justify-content: center; gap: 40px; margin-top: 40px;">
-                    <ul class="contact-info">
-                        <li><i class="ph-fill ph-phone text-primary"></i> <div><span>Telefone</span><strong>(11) 94713-2326</strong></div></li>
-                        <li><i class="ph-fill ph-envelope-simple text-primary"></i> <div><span>E-mail</span><strong>comercial@resimetalbeneficiamentos.com.br</strong></div></li>
+                
+                <div class="row" style="justify-content: center; align-items: flex-start;">
+                    <div class="col-text reveal-up">
+                        <ul class="contact-info">
+                        <li>
+                            <i class="ph-fill ph-phone text-primary"></i>
+                            <div>
+                                <span>Telefone</span>
+                                <strong><a href="tel:+5511947132326">(11) 94713-2326</a></strong>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="ph-fill ph-envelope-simple text-primary"></i>
+                            <div>
+                                <span>E-mail comercial</span>
+                                <strong><a href="mailto:comercial@resimetalbeneficiamentos.com.br">comercial@resimetalbeneficiamentos.com.br</a></strong>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="ph-fill ph-map-pin text-primary"></i>
+                            <div>
+                                <span>Endereço</span>
+                                <strong>
+                                    <a href="https://share.google/7v2LdyNmZ40iY5HFu" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+                                        Estrada Eng. Abilio Gondim Pereira, 480<br>Taboão - Mogi das Cruzes - SP | 08771-111
+                                    </a>
+                                </strong>
+                            </div>
+                        </li>
                     </ul>
+                </div>
+
+                <div class="col-form reveal-up" style="--delay: 0.2s">
+                    <form id="contactForm" class="quote-form">
+                        <div class="form-group">
+                            <label>Nome / Empresa</label>
+                            <input type="text" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Assunto</label>
+                            <select required>
+                                <option value="" disabled selected>Selecione um assunto</option>
+                                <option value="Beneficiamento">Beneficiamento de Resíduos</option>
+                                <option value="Compra/Venda">Compra/Venda de Lingotes</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mensagem</label>
+                            <textarea rows="3" placeholder="Como podemos ajudar?"></textarea>
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">
+                            <i class="ph-fill ph-paper-plane-right"></i> Enviar Mensagem
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
