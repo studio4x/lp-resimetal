@@ -102,14 +102,54 @@ function uploadImage($file) {
 - Campos de inserção de Scripts Externos (Tracking) em seções específicas da aplicação.
 
 ### Design Responsivo (Mobile Admin)
-- **Menu Off-canvas**: Ocultação lateral do painel de navegação em telas < 768px.
-- **Layer de Overlay**: Fechamento de menu via clique em área neutra.
-- **Grids Fluidas**: Forçamento de colunas únicas em formulários complexos para garantir usabilidade em dispositivos móveis.
+
+O painel utiliza um layout **Off-Canvas Global** — a sidebar fica recolhida por padrão em **todos os tamanhos de tela**, liberando 100% do espaço para o conteúdo.
+
+#### Sidebar Flutuante (Off-Canvas)
+- A sidebar tem `position: fixed` e `left: -280px` por padrão (fora da tela).
+- A classe `.active` move para `left: 0`, exibida como um modal lateral flutuante com `z-index: 2000`.
+- Um overlay semitransparente (`.mobile-overlay`) com `z-index: 1000` cobre o fundo e fecha o menu ao ser clicado.
+- O botão de toggle (`.mobile-toggle`) é `position: fixed` e **sempre visível** com `z-index: 1500`.
+
+#### Sistema de Grid Responsivo
+Nunca usar `style="display: grid; grid-template-columns:..."` inline. Utilizar as classes CSS padronizadas:
+
+| Classe | Desktop | Mobile (≤1024px) |
+|---|---|---|
+| `.admin-grid-2` | 2 colunas | 1 coluna |
+| `.admin-grid-3` | 3 colunas | 1 coluna |
+
+A media query `@media (max-width: 1024px)` força `grid-template-columns: 1fr !important` em todas as classes de grid.
+
+#### Tabelas Responsivas
+Tabelas (ex: lista de usuários) devem ser envolvidas por um container com `overflow-x: auto` para permitir scroll horizontal em telas estreitas sem quebrar o layout.
+
+#### Cache Busting Automático
+O CSS do admin é carregado com versionamento dinâmico para evitar cache:
+```html
+<link rel="stylesheet" href="css/admin-style.css?v=<?php echo BUILD_VERSION; ?>">
+```
 
 ---
 
-## 6. Fluxo de Instalação para Novos Projetos
+## 6. Sistema de Versionamento (Build)
+
+Uma constante `BUILD_VERSION` é definida em `includes/config.php` e exibida no rodapé do admin (`admin/includes/footer.php`).
+
+```php
+define('BUILD_VERSION', '1.2.4');
+```
+
+- **Quando incrementar**: a cada deploy com alterações estruturais, visuais ou funcionais.
+- **Formato**: `MAJOR.MINOR.PATCH` (semver simplificado).
+- **Exibição**: Rodapé de todas as páginas do admin com `© Ano Studio 4x - Painel Administrativo | Build v.X.X.X`.
+
+---
+
+## 7. Fluxo de Instalação para Novos Projetos
 1. Setup do banco de dados (4 tabelas core).
-2. Configuração do `includes/config.php` com credenciais de ambiente.
+2. Configuração do `includes/config.php` com credenciais de ambiente e `BUILD_VERSION`.
 3. Definição das `keys` de conteúdo no código da aplicação utilizando a função `getContent()`.
 4. Mapeamento de ativos do sistema (Logos/Banners) no gerenciador de galeria.
+5. Validar responsividade do admin no simulador mobile do Chrome (iPhone/Android).
+
